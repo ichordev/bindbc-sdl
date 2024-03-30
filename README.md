@@ -1,3 +1,5 @@
+## NOTICE: All future pull requests for SDL2 support should be in the [SDL2](https://github.com/BindBC/bindbc-sdl/tree/SDL2) branch, as `~master` is now moving towards supporting SDL3 exclusively.
+
 <div align="center" width="100%">
 	<img alt="BindBC-SDL logo" width="50%" src="https://raw.githubusercontent.com/BindBC/bindbc-branding/master/logo_wide_sdl.png"/>
 </div>
