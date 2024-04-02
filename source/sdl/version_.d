@@ -1,6 +1,5 @@
 /+
-+            Copyright 2022 – 2024 Aya Partridge
-+          Copyright 2018 - 2022 Michael D. Parker
++               Copyright 2024 Aya Partridge
 + Distributed under the Boost Software License, Version 1.0.
 +     (See accompanying file LICENSE_1_0.txt or copy at
 +           http://www.boost.org/LICENSE_1_0.txt)
@@ -10,34 +9,43 @@ module sdl.version_;
 import bindbc.sdl.config;
 import bindbc.sdl.codegen;
 
-enum SDL_MAJOR_VERSION = sdlSupport.major;
-enum SDL_MINOR_VERSION = sdlSupport.minor;
-enum SDL_PATCHLEVEL    = sdlSupport.patch;
-
-pragma(inline, true) void SDL_VERSION(SDL_version* x) nothrow @nogc pure @safe{
-	x.major = SDL_MAJOR_VERSION;
-	x.minor = SDL_MINOR_VERSION;
-	x.patch = SDL_PATCHLEVEL;
+struct SDL_Version{
+	ubyte major;
+	ubyte minor;
+	ubyte patch;
 }
 
-deprecated("Please use SDL_version() instead")
-	enum SDL_VERSIONNUM(ubyte x, ubyte y, ubyte z) = x*1000 + y*100 + z;
+enum SDL_MajorVersion  = sdlVersion.major;
+enum SDL_MinorVersion  = sdlVersion.minor;
+enum SDL_PatchLevel    = sdlVersion.patch;
+alias SDL_MAJOR_VERSION  = SDL_MajorVersion;
+alias SDL_MINOR_VERSION  = SDL_MinorVersion;
+alias SDL_PATCHLEVEL     = SDL_PatchLevel;
 
-deprecated("Please use SDL_VERSION_ATLEAST or SDL_version() instead")
-	enum SDL_COMPILEDVERSION = SDL_version(SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_PATCHLEVEL);
+pragma(inline,true) nothrow @nogc pure @safe{
+	void SDL_GetCompiledVersion(scope ref SDL_Version x){
+		x.major = SDL_MajorVersion;
+		x.minor = SDL_MinorVersion;
+		x.patch = SDL_PatchLevel;
+	}
+	alias SDL_VERSION = SDL_GetCompiledVersion;
+	
+	uint SDL_VersionNum(uint x, uint y, uint z) =>
+		x << 24 | y << 8 | z << 0;
+	alias SDL_VERSIONNUM = SDL_VersionNum;
+	
+	bool SDL_VersionAtLeast(uint x, uint y, uint z) =>
+		SDL_CompiledVersionNum >= SDL_VersionNum(x, y, z);
+	alias SDL_VERSION_ATLEAST = SDL_VersionAtLeast;
+}
 
-pragma(inline, true) nothrow @nogc{
-	bool SDL_VERSION_ATLEAST(ubyte x, ubyte y, ubyte z){ return SDL_version(SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_PATCHLEVEL) >= SDL_version(x, y, z); }
-}
-deprecated("Please use the non-template variant instead"){
-	enum SDL_VERSION_ATLEAST(ubyte x, ubyte y, ubyte z) = SDL_version(SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_PATCHLEVEL) >= SDL_version(x, y, z);
-}
+enum SDL_CompiledVersionNum = SDL_VersionNum(SDL_MajorVersion, SDL_MinorVersion, SDL_PatchLevel);
+alias SDL_COMPILEDVERSION = SDL_CompiledVersionNum;
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{void}, q{SDL_GetVersion}, q{SDL_version* ver}},
+		{q{int}, q{SDL_GetVersion}, q{SDL_Version* ver}},
 		{q{const(char)*}, q{SDL_GetRevision}, q{}},
-		{q{int}, q{SDL_GetRevisionNumber}, q{}}, //NOTE: this function is deprecated
 	];
 	return ret;
 }()));

@@ -1,12 +1,14 @@
 ## NOTICE: All future pull requests for SDL2 support should be in the [SDL2](https://github.com/BindBC/bindbc-sdl/tree/SDL2) branch, as `~master` is now moving towards supporting SDL3 exclusively.
 
+## NOTICE: SDL 3.0 has not been officially released yet. This documentation is being written as if it is.
+
 <div align="center" width="100%">
 	<img alt="BindBC-SDL logo" width="50%" src="https://raw.githubusercontent.com/BindBC/bindbc-branding/master/logo_wide_sdl.png"/>
 </div>
 
 # BindBC-SDL
 This project provides a set of both static and dynamic bindings to
-[SDL (Simple DirectMedia Layer)](https://libsdl.org/) and its official extension libraries. They are compatible with `@nogc` and `nothrow`, and can be compiled with BetterC compatibility. This package is intended to replace [DerelictSDL2](https://github.com/DerelictOrg/DerelictSDL2), which does not provide the same level of compatibility.
+[SDL (Simple DirectMedia Layer)](https://libsdl.org/) and its official extension libraries. They are compatible with `@nogc` and `nothrow`, and can be compiled with BetterC compatibility.
 
 | Table of Contents |
 |-------------------|
@@ -24,9 +26,9 @@ BindBC-SDL&mdash;as well as every other binding in the [BindBC project](https://
 Bear in mind that you still need to abide by [SDL's license](https://github.com/libsdl-org/SDL/blob/main/LICENSE.txt), and the licenses of any SDL_* libraries that you use through these bindings.
 
 ## SDL documentation
-This readme describes how to use BindBC-SDL, *not* SDL itself. BindBC-SDL is a direct D binding to the SDL API, so any existing SDL documentation and tutorials can be adapted with only minor modifications.
-* [The SDL Wiki](https://wiki.libsdl.org/FrontPage) has official documentation of the SDL API.
-* [The SDL 2 tutorials from Lazy Foo' Productions](https://lazyfoo.net/tutorials/SDL/index.php) are a good start for those unfamiliar with the API.
+This readme describes how to use BindBC-SDL, *not* SDL itself. BindBC-SDL is a direct D binding to the SDL3 API, so any existing SDL documentation and tutorials can be adapted with only minor modifications.
+* [The SDL Wiki](https://wiki.libsdl.org/FrontPage) has official documentation of the SDL API. It also has [a list of tutorials](https://wiki.libsdl.org/SDL3/Tutorials), although most still deal with SDL2 at present.
+* [How to migrate from SDL 2.0](https://github.com/libsdl-org/SDL/blob/main/docs/README-migration.md).
 
 > [!NOTE]\
 > The bindings for `SDL_atomics.h` have not been thoroughly tested. If the `SDL_atomics` binding causes trouble and you don't need to use it, you can supply the version identifier `SDL_No_Atomics` and the module's contents will not be compiled. If it's causing trouble and you need it, please report an issue.
@@ -37,12 +39,12 @@ To use BindBC-SDL in your dub project, add it to the list of `dependencies` in y
 Example __dub.json__
 ```json
 "dependencies": {
-	"bindbc-sdl": "~>1.4.0",
+	"bindbc-sdl": "~>2.0.0",
 },
 ```
 Example __dub.sdl__
 ```sdl
-dependency "bindbc-sdl" version="~>1.4.0"
+dependency "bindbc-sdl" version="~>2.0.0"
 ```
 
 By default, BindBC-SDL is configured to compile as a dynamic binding that is not BetterC-compatible. If you prefer static bindings or need BetterC compatibility, they can be enabled via `subConfigurations` in your dub configuration file. For configuration naming & more details, see [Configurations](#configurations).
@@ -58,23 +60,23 @@ Example __dub.sdl__
 subConfiguration "bindbc-sdl" "staticBC"
 ```
 
-If you need to use the SDL_* libraries, or versions of SDL newer than 2.0.0, then you will have to add the appropriate version identifiers to `versions` in your dub configuration. For a list of library version identifiers, see [Library versions](#library-versions).
+If you need to use the SDL_* libraries, or versions of SDL newer than 3.0.0, then you will have to add the appropriate version identifiers to `versions` in your dub configuration. For a list of library version identifiers, see [Library versions](#library-versions).
 
 If you're using static bindings, then you will also need to add the name of each library you're using to `libs`.
 
 Example __dub.json__
 ```json
 "versions": [
-	"SDL_2016", "SDL_Net_200",
+	"SDL_3_2", "SDL_Net_3_0",
 ],
 "libs": [
-	"SDL2", "SDL2_net",
+	"SDL3", "SDL3_net",
 ],
 ```
 Example __dub.sdl__
 ```sdl
-versions "SDL_2016" "SDL_Net_200"
-libs "SDL2" "SDL2_net"
+versions "SDL_3_2" "SDL_Net_3_2"
+libs "SDL3" "SDL3_net"
 ```
 
 **If you're using static bindings**: `import bindbc.sdl` in your code, and then you can use all of SDL just like you would in C. That's it!
@@ -94,33 +96,39 @@ void main(){
 
 For most use cases, it's best to use BindBC-Loader's [error handling API](https://github.com/BindBC/bindbc-loader#error-handling) to see if there were any errors while loading the libraries. This information can be written to a log file before aborting the program.
 
-The load function will also return a member of the `SDLSupport` enum (or equivalent: e.g. `SDLNetSupport` for SDL_net) which can be used for debugging:
+The load function will also return a member of the `LoadMsg` enum, which can be used for debugging:
 
 * `noLibrary` means the library couldn't be found.
 * `badLibrary` means there was an error while loading the library.
-* A version number means that SDL was loaded, however this version number currently **does not** correspond to which version of SDL was loaded. Instead, please use `SDL_GetVersion()` for SDL, `IMG_Linked_Version()` for SDL_image, `Mix_Linked_Version()` for SDL_mixer, `SDLNet_Linked_Version()` for SDL_net, or `TTF_Linked_Version()` for SDL_ttf.
+* `success` means that the library was loaded without any errors.
+
+You should also check that the desired minimum version of the library was loaded. You can do this using:
+* `SDL_GetVersion()` for SDL.
+* `IMG_Linked_Version()` for SDL_image.
+* `Mix_Linked_Version()` for SDL_mixer.
+* `SDLNet_Linked_Version()` for SDL_net.
+* `TTF_Linked_Version()` for SDL_ttf.
 
 Here's a simple example using only the load function's return value:
 
 ```d
 import bindbc.sdl;
+import bindbc.loader;
 
 /*
 This code attempts to load the SDL shared library using
 well-known variations of the library name for the host system.
-`sdlSupport` is an `SDLSupport` version corresponding to the
-configured library version. (via SDL_204, SDL_2010 etc.)
 */
-SDLSupport ret = loadSDL();
-if(ret != sdlSupport){
+LoadMsg ret = loadSDL();
+if(ret != LoadMsg.success){
 	/*
 	Error handling. For most use cases, it's best to use the error handling API in
 	BindBC-Loader to retrieve error messages for logging and then abort.
 	If necessary, it's possible to determine the root cause via the return value:
 	*/
-	if(ret == SDLSupport.noLibrary){
+	if(ret == LoadMsg.noLibrary){
 		//The SDL shared library failed to load
-	}else if(ret == SDLSupport.badLibrary){
+	}else if(ret == LoadMsg.badLibrary){
 		/*
 		One or more symbols failed to load. The likely cause is that
 		the shared library is for a lower version than BindBC-SDL was
@@ -132,10 +140,10 @@ if(ret != sdlSupport){
 /*
 This code attempts to load the SDL library using a user-supplied file name.
 Usually, the name and/or path used will be platform specific, as in this
-example which attempts to load `sdl2.dll` from the `libs` subdirectory,
+example which attempts to load `sdl3.dll` from the `libs` subdirectory,
 relative to the executable, only on Windows.
 */
-version(Windows) loadSDL("libs/sdl2.dll");
+version(Windows) loadSDL("libs/sdl3.dll");
 ```
 
 [The error handling API](https://github.com/BindBC/bindbc-loader#error-handling) in BindBC-Loader can be used to log error messages:
@@ -150,8 +158,8 @@ but the API names are common enough that they could appear in other packages.
 import loader = bindbc.loader.sharedlib;
 
 bool loadLib(){
-	SDLSupport ret = loadSDL();
-	if(ret != sdlSupport){
+	LoadMsg ret = loadSDL();
+	if(ret != LoadMsg.success){
 		//Log the error info
 		foreach(info; loader.errors){
 			/*
@@ -163,7 +171,7 @@ bool loadLib(){
 		
 		//Optionally construct a user-friendly error message for the user
 		string msg;
-		if(ret == SDLSupport.noLibrary){
+		if(ret == LoadMsg.noLibrary){
 			msg = "This application requires the SDL library.";
 		}else{
 			SDL_version version_;
@@ -172,7 +180,7 @@ bool loadLib(){
 				itoa(version_.major)~"."~
 				itoa(version_.minor)~"."~
 				itoa(version_.patch)~
-				". Please upgrade to 2.0.16+.";
+				". Please upgrade to 3.2.0+.";
 		}
 		//A hypothetical message box function
 		showMessageBox(msg);
@@ -202,7 +210,7 @@ On other systems, it usually means installing the SDL shared libraries through a
 
 It is recommended that you always select the minimum version you require _and no higher_.
 If a lower version is loaded then it's still possible to call functions available in that lower version, but any calls to functions from versions between that version and the one you configured will result in a null pointer access.
-For example, if you configured SDL to 2.0.4 (`SDL_204`) but loaded SDL 2.0.2 at runtime, then any function pointers from 2.0.3 and 2.0.4 will be `null`. For this reason, it's recommended to always specify your required version of the SDL library at compile time and unconditionally abort when you receive an `SDLSupport.badLibrary` return value from `loadSDL` (or equivalent).
+For example, if you configured SDL to 3.4.0 (`SDL_3_4`) but loaded SDL 3.0.0 at runtime, then any function pointers from 3.4.0 and 3.2.0 will be `null`. For this reason, it's recommended to always specify your required version of the SDL library at compile time and unconditionally abort when you receive an `LoadMsg.badLibrary` return value from `loadSDL` (or equivalent).
 
 The function `isSDLLoaded` returns `true` if any version of the shared library has been loaded and `false` if not. `unloadSDL` can be used to unload a successfully loaded shared library. The SDL_* libraries provide similar functions: `isSDLImageLoaded`, `unloadSDLImage`, etc.
 
@@ -211,7 +219,7 @@ Static _bindings_ do not require static _linking_. The static bindings have a li
 
 When linking with the shared (or import) libraries, there is a runtime dependency on the shared library just as there is when using the dynamic bindings. The difference is that the shared libraries are no longer loaded manually&mdash;loading is handled automatically by the system when the program is launched. Attempting to call `loadSDL` with the static bindings enabled will result in a compilation error.
 
-Static linking requires the SDL development packages be installed on your system. The [SDL download page](https://www.libsdl.org/download-2.0.php) provides development packages for Windows and macOS. You can also install them via your system's package manager. For example, on Debian-based Linux distributions `sudo apt install libsdl2-dev` will install both the development and runtime packages.
+Static linking requires the SDL development packages be installed on your system. The [SDL releases page](https://github.com/libsdl-org/SDL/releases) provides development packages for Windows and macOS. You can also install them via your system's package manager. For example, on Debian-based Linux distributions `sudo apt install libsdl3-dev` will install both the development and runtime packages.
 
 When linking with the static libraries, there is no runtime dependency on SDL. The SDL homepage does not distribute pre-compiled static libraries. If you decide to obtain static libraries from another source (usually by compiling them yourself) you will also need to ensure that you link with all of SDL's link-time dependencies (such as the OpenGL library and system API libraries).
 
@@ -222,42 +230,18 @@ These are the supported versions of each SDL_* library, along with the correspon
 > If you have `SDL_THREAD_SAFETY_ANALYSIS` support enabled in SDL, you may use version identifier `SDL_ThreadSafetyAnalysis`.
 
 > [!NOTE]\
-> It is necessary to specify only a single version identifier per library. For example, `SDL_Image_204` by itself will activate the SDL_image binding.
->
-> Previously, there were identifiers for the SDL_* libraries with no version. (`SDL_Image`, `SDL_TTF`, etc.) These are are now deprecated due to their ambiguity and older projects are encouraged to remove them.
+> It is necessary to specify only a single version identifier per library. For example, `SDL_Image_3_0` by itself will activate the SDL_image binding.
+
+> [!NOTE]\
+> All even-numbered SDL/SDL_* versions are releases, while all odd-numbered versions are pre-releases—which are not for general use and are therefore not supported by BindBC-SDL.
 
 <details>
 	<summary><h3>SDL versions</h3></summary>
 
 | Version     |Version identifier|
 |-------------|------------------|
-| 2.0.0       | (none; default)  |
-| 2.0.1       | `SDL_201`        |
-| 2.0.2       | `SDL_202`        |
-| 2.0.3       | `SDL_203`        |
-| 2.0.4       | `SDL_204`        |
-| 2.0.5       | `SDL_205`        |
-| 2.0.6       | `SDL_206`        |
-| 2.0.7       | `SDL_207`        |
-| 2.0.8       | `SDL_208`        |
-| 2.0.9       | `SDL_209`        |
-| 2.0.10      | `SDL_2010`       |
-| 2.0.12      | `SDL_2012`       |
-| 2.0.14      | `SDL_2014`       |
-| 2.0.16      | `SDL_2016`       |
-| 2.0.18      | `SDL_2018`       |
-| 2.0.20      | `SDL_2020`       |
-| 2.0.22      | `SDL_2022`       |
-| 2.24.X      | `SDL_2_24`       |
-| 2.26.X      | `SDL_2_26`       |
-| 2.28.X      | `SDL_2_28`       |
-| 2.30.X      | `SDL_2_30`       |
+| 3.0.0       | (none; default)  |
 
-> [!WARNING]\
-> SDL 2.0.1 on Windows had a bug preventing `SDL_GetPrefPath` from creating a folder when it doesn't exist. It's fine to compile with `SDL_201`, but make sure to ship your app with 2.0.2 or later on Windows and _verify_ that the [linked version](https://wiki.libsdl.org/CategoryVersion) is 2.0.2 or later with `SDL_GetVersion`. Alternatively, compile with `SDL_202` on Windows but `SDL_201` on other platforms, thereby guaranteeing an error on Windows if the user doesn't have SDL 2.0.2 or higher.
-
-> [!NOTE]\
-> Starting from SDL 2.0.10, all even-numbered versions are releases, while all odd-numbered versions are pre-releases—which are not for general use and therefore not supported by BindBC-SDL.
 
 </details>
 
@@ -265,17 +249,7 @@ These are the supported versions of each SDL_* library, along with the correspon
 
 | Version |Version identifier| Public API changed |
 |---------|------------------|--------------------|
-| 2.0.0   | `SDL_Image_200`  |                    |
-| 2.0.1   | `SDL_Image_201`  | :x:                |
-| 2.0.2   | `SDL_Image_202`  | :heavy_check_mark: |
-| 2.0.3   | `SDL_Image_203`  | :x:                |
-| 2.0.4   | `SDL_Image_204`  | :x:                |
-| 2.0.5   | `SDL_Image_205`  | :x:                |
-| 2.6.X   | `SDL_Image_2_6`  | :heavy_check_mark: |
-| 2.8.X   | `SDL_Image_2_8`  | :x:                |
-
-> [!NOTE]\
-> Starting from SDL_image 2.6.X, all even-numbered versions are releases, while all odd-numbered versions are pre-releases—which are not for general use and therefore not supported by BindBC-SDL.
+| 3.0.0   | `SDL_Image_3_0`  |                    |
 
 </details>
 
@@ -283,15 +257,7 @@ These are the supported versions of each SDL_* library, along with the correspon
 
 | Version |Version identifier| Public API changed |
 |---------|------------------|--------------------|
-| 2.0.0   | `SDL_Mixer_200`  |                    |
-| 2.0.1   | `SDL_Mixer_201`  | :heavy_check_mark: |
-| 2.0.2   | `SDL_Mixer_202`  | :heavy_check_mark: |
-| 2.0.4   | `SDL_Mixer_204`  | :heavy_check_mark: |
-| 2.6.X   | `SDL_Mixer_2_6`  | :heavy_check_mark: |
-| 2.8.X   | `SDL_Mixer_2_8`  | :heavy_check_mark: |
-
-> [!NOTE]\
-> Starting from SDL_mixer 2.0.4, all even-numbered versions are releases, while all odd-numbered versions are pre-releases—which are not for general use and therefore not supported by BindBC-SDL.
+| 3.0.0   | `SDL_Mixer_3_0`  |                    |
 
 </details>
 
@@ -299,12 +265,7 @@ These are the supported versions of each SDL_* library, along with the correspon
 
 | Version |Version identifier| Public API changed |
 |---------|------------------|--------------------|
-| 2.0.0   | `SDL_Net_200`    |                    |
-| 2.0.1   | `SDL_Net_201`    | :x:                |
-| 2.2.X   | `SDL_Net_2_2`    | :x:                |
-
-> [!NOTE]\
-> Starting from SDL_net 2.2.X, all even-numbered versions are releases, while all odd-numbered versions are pre-releases—which are not for general use and therefore not supported by BindBC-SDL.
+| 3.0.0   | `SDL_Net_3_0`    |                    |
 
 </details>
 
@@ -312,16 +273,7 @@ These are the supported versions of each SDL_* library, along with the correspon
 
 | Version |Version identifier| Public API changed |
 |---------|------------------|--------------------|
-| 2.0.12  | `SDL_TTF_2012`   |                    |
-| 2.0.13  | `SDL_TTF_2013`   | :x:                |
-| 2.0.14  | `SDL_TTF_2014`   | :heavy_check_mark: |
-| 2.0.15  | `SDL_TTF_2015`   | :x:                |
-| 2.0.18  | `SDL_TTF_2018`   | :heavy_check_mark: |
-| 2.20.X  | `SDL_TTF_2_20`   | :heavy_check_mark: |
-| 2.22.X  | `SDL_TTF_2_22`   | :x:                |
-
-> [!NOTE]\
-> Starting from SDL_ttf 2.0.18, all even-numbered versions are releases, while all odd-numbered versions are pre-releases—which are not for general use and therefore not supported by BindBC-SDL.
+| 3.0.0   | `SDL_TTF_3_0`    |                    |
 
 </details>
 
