@@ -51,7 +51,7 @@ mixin(makeEnumBind(q{SDL_Scancode}, members: (){
 		{{q{_9},                    q{SDL_SCANCODE_9}},                     q{38}},
 		{{q{_0},                    q{SDL_SCANCODE_0}},                     q{39}},
 		
-		{{q{return_},               q{SDL_SCANCODE_RETURN}},                q{40}, aliases: [{q{enter}, q{SDL_SCANCODE_ENTER}}]},
+		{{q{enter},                 q{SDL_SCANCODE_ENTER}},                 q{40}, aliases: [{q{return_}, q{SDL_SCANCODE_RETURN}}]},
 		{{q{escape},                q{SDL_SCANCODE_ESCAPE}},                q{41}},
 		{{q{backspace},             q{SDL_SCANCODE_BACKSPACE}},             q{42}},
 		{{q{tab},                   q{SDL_SCANCODE_TAB}},                   q{43}},
@@ -67,7 +67,7 @@ mixin(makeEnumBind(q{SDL_Scancode}, members: (){
 		{{q{apostrophe},            q{SDL_SCANCODE_APOSTROPHE}},            q{52}},
 		{{q{grave},                 q{SDL_SCANCODE_GRAVE}},                 q{53}},
 		{{q{comma},                 q{SDL_SCANCODE_COMMA}},                 q{54}},
-		{{q{period},                q{SDL_SCANCODE_PERIOD}},                q{55}, aliases: [{q{fullStop}, q{SDL_SCANCODE_FULLSTOP}}]},
+		{{q{fullStop},              q{SDL_SCANCODE_FULLSTOP}},              q{55}, aliases: [{q{period}, q{SDL_SCANCODE_PERIOD}}]},
 		{{q{slash},                 q{SDL_SCANCODE_SLASH}},                 q{56}},
 		
 		{{q{capsLock},              q{SDL_SCANCODE_CAPSLOCK}},              q{57}},
@@ -115,7 +115,7 @@ mixin(makeEnumBind(q{SDL_Scancode}, members: (){
 		{{q{kp8},                   q{SDL_SCANCODE_KP_8}},                  q{96}},
 		{{q{kp9},                   q{SDL_SCANCODE_KP_9}},                  q{97}},
 		{{q{kp0},                   q{SDL_SCANCODE_KP_0}},                  q{98}},
-		{{q{kpPeriod},              q{SDL_SCANCODE_KP_PERIOD}},             q{99}, aliases: [{q{kpDot}, q{SDL_SCANCODE_KP_DOT}}]},
+		{{q{kpFullStop},            q{SDL_SCANCODE_KP_FULLSTOP}},           q{99}, aliases: [{q{kpPeriod}, q{SDL_SCANCODE_KP_PERIOD}}]},
 		
 		{{q{nonUSBackslash},        q{SDL_SCANCODE_NONUSBACKSLASH}},        q{100}},
 		{{q{application},           q{SDL_SCANCODE_APPLICATION}},           q{101}},
@@ -174,7 +174,7 @@ mixin(makeEnumBind(q{SDL_Scancode}, members: (){
 		{{q{cancel},                q{SDL_SCANCODE_CANCEL}},                q{155}},
 		{{q{clear},                 q{SDL_SCANCODE_CLEAR}},                 q{156}},
 		{{q{prior},                 q{SDL_SCANCODE_PRIOR}},                 q{157}},
-		{{q{return2},               q{SDL_SCANCODE_RETURN2}},               q{158}, aliases: [{q{enter2}, q{SDL_SCANCODE_ENTER2}}]},
+		{{q{enter2},                q{SDL_SCANCODE_ENTER2}},                q{158}, aliases: [{q{return2}, q{SDL_SCANCODE_RETURN2}}]},
 		{{q{separator},             q{SDL_SCANCODE_SEPARATOR}},             q{159}},
 		{{q{out_},                  q{SDL_SCANCODE_OUT}},                   q{160}},
 		{{q{oper},                  q{SDL_SCANCODE_OPER}},                  q{161}},

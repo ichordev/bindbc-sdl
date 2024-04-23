@@ -16,7 +16,7 @@ mixin(makeEnumBind(q{SDL_Keycode}, q{int}, aliases: [q{SDLK}], members: (){
 	EnumMember[] ret = [
 		{{q{unknown},               q{SDLK_UNKNOWN}},               q{0}},
 		
-		{{q{return_},               q{SDLK_RETURN}},                q{'\r'}, aliases: [{q{enter}, q{SDLK_ENTER}}]},
+		{{q{enter},                 q{SDLK_ENTER}},                 q{'\r'}, aliases: [{q{return_}, q{SDLK_RETURN}}]},
 		{{q{escape},                q{SDLK_ESCAPE}},                q{'\x1B'}},
 		{{q{backspace},             q{SDLK_BACKSPACE}},             q{'\b'}},
 		{{q{tab},                   q{SDLK_TAB}},                   q{'\t'}},
@@ -34,7 +34,7 @@ mixin(makeEnumBind(q{SDL_Keycode}, q{int}, aliases: [q{SDLK}], members: (){
 		{{q{plus},                  q{SDLK_PLUS}},                  q{'+'}},
 		{{q{comma},                 q{SDLK_COMMA}},                 q{','}},
 		{{q{minus},                 q{SDLK_MINUS}},                 q{'-'}},
-		{{q{period},                q{SDLK_PERIOD}},                q{'.'}, aliases: [{q{fullStop}, q{SDLK_FULLSTOP}}]},
+		{{q{fullStop},              q{SDLK_FULLSTOP}},              q{'.'}, aliases: [{q{period}, q{SDLK_PERIOD}}]},
 		{{q{slash},                 q{SDLK_SLASH}},                 q{'/'}},
 		{{q{_0},                    q{SDLK_0}},                     q{'0'}},
 		{{q{_1},                    q{SDLK_1}},                     q{'1'}},
@@ -132,7 +132,7 @@ mixin(makeEnumBind(q{SDL_Keycode}, q{int}, aliases: [q{SDLK}], members: (){
 		{{q{kp8},                   q{SDLK_KP_8}},                  q{SDL_ScancodeToKeycode(SDL_Scancode.kp8)}},
 		{{q{kp9},                   q{SDLK_KP_9}},                  q{SDL_ScancodeToKeycode(SDL_Scancode.kp9)}},
 		{{q{kp0},                   q{SDLK_KP_0}},                  q{SDL_ScancodeToKeycode(SDL_Scancode.kp0)}},
-		{{q{kpPeriod},              q{SDLK_KP_PERIOD}},             q{SDL_ScancodeToKeycode(SDL_Scancode.kpPeriod)}, aliases: [{q{kpDot}, q{SDLK_KP_DOT}}]},
+		{{q{kpFullStop},            q{SDLK_KP_FULLSTOP}},           q{SDL_ScancodeToKeycode(SDL_Scancode.kpPeriod)}, aliases: [{q{kpPeriod}, q{SDLK_KP_PERIOD}}]},
 		
 		{{q{application},           q{SDLK_APPLICATION}},           q{SDL_ScancodeToKeycode(SDL_Scancode.application)}},
 		{{q{power},                 q{SDLK_POWER}},                 q{SDL_ScancodeToKeycode(SDL_Scancode.power)}},
@@ -171,7 +171,7 @@ mixin(makeEnumBind(q{SDL_Keycode}, q{int}, aliases: [q{SDLK}], members: (){
 		{{q{cancel},                q{SDLK_CANCEL}},                q{SDL_ScancodeToKeycode(SDL_Scancode.cancel)}},
 		{{q{clear},                 q{SDLK_CLEAR}},                 q{SDL_ScancodeToKeycode(SDL_Scancode.clear)}},
 		{{q{prior},                 q{SDLK_PRIOR}},                 q{SDL_ScancodeToKeycode(SDL_Scancode.prior)}},
-		{{q{return2},               q{SDLK_RETURN2}},               q{SDL_ScancodeToKeycode(SDL_Scancode.return2)}, aliases: [{q{enter2}, q{SDLK_ENTER2}}]},
+		{{q{enter2},                q{SDLK_ENTER2}},                q{SDL_ScancodeToKeycode(SDL_Scancode.return2)}, aliases: [{q{return2}, q{SDLK_RETURN2}}]},
 		{{q{separator},             q{SDLK_SEPARATOR}},             q{SDL_ScancodeToKeycode(SDL_Scancode.separator)}},
 		{{q{out_},                  q{SDLK_OUT}},                   q{SDL_ScancodeToKeycode(SDL_Scancode.out_)}},
 		{{q{oper},                  q{SDLK_OPER}},                  q{SDL_ScancodeToKeycode(SDL_Scancode.oper)}},
@@ -284,7 +284,7 @@ SDL_Keycode SDL_ScancodeToKeycode(SDL_Scancode x) nothrow @nogc pure @safe =>
 	cast(SDL_Keycode)(x | SDL_Keycode.scancodeMask);
 alias SDL_SCANCODE_TO_KEYCODE = SDL_ScancodeToKeycode;
 
-mixin(makeEnumBind(q{SDL_KeyMod}, members: (){
+mixin(makeEnumBind(q{SDL_KeyMod}, aliases: [q{SDL_KMod}], members: (){
 	EnumMember[] ret = [
 		{{q{none},        q{SDL_KMOD_NONE}},        q{0x0000}},
 		{{q{lShift},      q{SDL_KMOD_LSHIFT}},      q{0x0001}},
@@ -309,4 +309,3 @@ mixin(makeEnumBind(q{SDL_KeyMod}, members: (){
 	];
 	return ret;
 }()));
-alias SDL_KMod = SDL_KeyMod;

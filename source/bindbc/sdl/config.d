@@ -22,9 +22,8 @@ enum cStyleEnums = (){
 }();
 
 enum dStyleEnums = (){
-	version(SDL_All_Enums)     return true;
-	version(SDL_D_Enums_Only)  return true;
-	else return false;
+	version(SDL_C_Enums_Only)  return false;
+	else return true;
 }();
 
 enum sdlVersion = (){
