@@ -48,43 +48,43 @@ mixin(makeEnumBind(q{SDL_BitmapOrder}, members: (){
 
 mixin(makeEnumBind(q{SDL_PackedOrder}, members: (){
 	EnumMember[] ret = [
-		{{q{none},    q{SDL_PackedOrder.NONE}}},
-		{{q{xrgb},    q{SDL_PackedOrder.XRGB}}},
-		{{q{rgbx},    q{SDL_PackedOrder.RGBX}}},
-		{{q{argb},    q{SDL_PackedOrder.ARGB}}},
-		{{q{rgba},    q{SDL_PackedOrder.RGBA}}},
-		{{q{xbgr},    q{SDL_PackedOrder.XBGR}}},
-		{{q{bgrx},    q{SDL_PackedOrder.BGRX}}},
-		{{q{abgr},    q{SDL_PackedOrder.ABGR}}},
-		{{q{bgra},    q{SDL_PackedOrder.BGRA}}},
+		{{q{none},    q{SDL_PACKEDORDER_NONE}}},
+		{{q{xrgb},    q{SDL_PACKEDORDER_XRGB}}},
+		{{q{rgbx},    q{SDL_PACKEDORDER_RGBX}}},
+		{{q{argb},    q{SDL_PACKEDORDER_ARGB}}},
+		{{q{rgba},    q{SDL_PACKEDORDER_RGBA}}},
+		{{q{xbgr},    q{SDL_PACKEDORDER_XBGR}}},
+		{{q{bgrx},    q{SDL_PACKEDORDER_BGRX}}},
+		{{q{abgr},    q{SDL_PACKEDORDER_ABGR}}},
+		{{q{bgra},    q{SDL_PACKEDORDER_BGRA}}},
 	];
 	return ret;
 }()));
 
 mixin(makeEnumBind(q{SDL_ArrayOrder}, members: (){
 	EnumMember[] ret = [
-		{{q{none},    q{SDL_ArrayOrder.NONE}}},
-		{{q{rgb},     q{SDL_ArrayOrder.RGB}}},
-		{{q{rgba},    q{SDL_ArrayOrder.RGBA}}},
-		{{q{argb},    q{SDL_ArrayOrder.ARGB}}},
-		{{q{bgr},     q{SDL_ArrayOrder.BGR}}},
-		{{q{bgra},    q{SDL_ArrayOrder.BGRA}}},
-		{{q{abgr},    q{SDL_ArrayOrder.ABGR}}},
+		{{q{none},    q{SDL_ARRAYORDER_NONE}}},
+		{{q{rgb},     q{SDL_ARRAYORDER_RGB}}},
+		{{q{rgba},    q{SDL_ARRAYORDER_RGBA}}},
+		{{q{argb},    q{SDL_ARRAYORDER_ARGB}}},
+		{{q{bgr},     q{SDL_ARRAYORDER_BGR}}},
+		{{q{bgra},    q{SDL_ARRAYORDER_BGRA}}},
+		{{q{abgr},    q{SDL_ARRAYORDER_ABGR}}},
 	];
 	return ret;
 }()));
 
 mixin(makeEnumBind(q{SDL_PackedLayout}, members: (){
 	EnumMember[] ret = [
-		{{q{none},        q{SDL_PackedLayout.NONE}}},
-		{{q{_332},        q{SDL_PackedLayout.332}}},
-		{{q{_4444},       q{SDL_PackedLayout.4444}}},
-		{{q{_1555},       q{SDL_PackedLayout.1555}}},
-		{{q{_5551},       q{SDL_PackedLayout.5551}}},
-		{{q{_565},        q{SDL_PackedLayout.565}}},
-		{{q{_8888},       q{SDL_PackedLayout.8888}}},
-		{{q{_2101010},    q{SDL_PackedLayout.2101010}}},
-		{{q{_1010102},    q{SDL_PackedLayout.1010102}}},
+		{{q{none},        q{SDL_PACKEDLAYOUT_NONE}}},
+		{{q{_332},        q{SDL_PACKEDLAYOUT_332}}},
+		{{q{_4444},       q{SDL_PACKEDLAYOUT_4444}}},
+		{{q{_1555},       q{SDL_PACKEDLAYOUT_1555}}},
+		{{q{_5551},       q{SDL_PACKEDLAYOUT_5551}}},
+		{{q{_565},        q{SDL_PACKEDLAYOUT_565}}},
+		{{q{_8888},       q{SDL_PACKEDLAYOUT_8888}}},
+		{{q{_2101010},    q{SDL_PACKEDLAYOUT_2101010}}},
+		{{q{_1010102},    q{SDL_PACKEDLAYOUT_1010102}}},
 	];
 	return ret;
 }()));

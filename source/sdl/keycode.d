@@ -171,7 +171,7 @@ mixin(makeEnumBind(q{SDL_Keycode}, q{int}, aliases: [q{SDLK}], members: (){
 		{{q{cancel},                q{SDLK_CANCEL}},                q{SDL_ScancodeToKeycode(SDL_Scancode.cancel)}},
 		{{q{clear},                 q{SDLK_CLEAR}},                 q{SDL_ScancodeToKeycode(SDL_Scancode.clear)}},
 		{{q{prior},                 q{SDLK_PRIOR}},                 q{SDL_ScancodeToKeycode(SDL_Scancode.prior)}},
-		{{q{enter2},                q{SDLK_ENTER2}},                q{SDL_ScancodeToKeycode(SDL_Scancode.return2)}, aliases: [{q{return2}, q{SDLK_RETURN2}}]},
+		{{q{enter2},                q{SDLK_ENTER2}},                q{SDL_ScancodeToKeycode(SDL_Scancode.enter2)}, aliases: [{q{return2}, q{SDLK_RETURN2}}]},
 		{{q{separator},             q{SDLK_SEPARATOR}},             q{SDL_ScancodeToKeycode(SDL_Scancode.separator)}},
 		{{q{out_},                  q{SDLK_OUT}},                   q{SDL_ScancodeToKeycode(SDL_Scancode.out_)}},
 		{{q{oper},                  q{SDLK_OPER}},                  q{SDL_ScancodeToKeycode(SDL_Scancode.oper)}},

@@ -52,11 +52,11 @@ alias SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER = SDL_PropIOStreamAndroidAassetPo
 alias SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER = SDL_PropIOStreamDynamicMemoryPointer;
 alias SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER = SDL_PropIOStreamDynamicChunkSizeNumber;
 
-mixin(makeEnumBind("SDL_IOSeek", members: (){
+mixin(makeEnumBind(q{SDL_IOSeek}, members: (){
 	EnumMember[] ret = [
-		{{"set", "SDL_IO_SEEK_SET"}, "0"},
-		{{"cur", "SDL_IO_SEEK_CUR"}, "1"},
-		{{"end", "SDL_IO_SEEK_END"}, "2"},
+		{{q{set}, q{SDL_IO_SEEK_SET}}, q{0}},
+		{{q{cur}, q{SDL_IO_SEEK_CUR}}, q{1}},
+		{{q{end}, q{SDL_IO_SEEK_END}}, q{2}},
 	];
 	return ret;
 }()));

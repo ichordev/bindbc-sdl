@@ -17,12 +17,16 @@ enum staticBinding = (){
 }();
 
 enum cStyleEnums = (){
-	version(SDL_D_Enums_Only)  return false;
+	version(SDL_C_Enums_Only)         return true;
+	else version(BindBC_D_Enums_Only) return false;
+	else version(SDL_D_Enums_Only)    return false;
 	else return true;
 }();
 
 enum dStyleEnums = (){
-	version(SDL_C_Enums_Only)  return false;
+	version(SDL_D_Enums_Only)         return true;
+	else version(BindBC_C_Enums_Only) return false;
+	else version(SDL_C_Enums_Only)    return false;
 	else return true;
 }();
 

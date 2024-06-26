@@ -13,18 +13,18 @@ import sdl.iostream;
 import sdl.properties;
 import sdl.stdinc;
 
-mixin(makeEnumBind(q{SDL_AudioFormat}, q{ushort}, [q{SDL_Audio}], members: (){
+mixin(makeEnumBind(q{SDL_AudioFormat}, q{ushort}, aliases: [q{SDL_Audio}], members: (){
 	EnumMember[] ret = [
-		{{q{u8},     q{SDL_AUDIO_U8}},     q{0x0008}},
-		{{q{s8},     q{SDL_AUDIO_S8}},     q{0x8008}},
-		{{q{s16LE},  q{SDL_AUDIO_S16LE}},  q{0x8010}},
-		{{q{s16BE},  q{SDL_AUDIO_S16BE}},  q{0x9010}},
+		{{q{u8},       q{SDL_AUDIO_U8}},     q{0x0008}},
+		{{q{s8},       q{SDL_AUDIO_S8}},     q{0x8008}},
+		{{q{s16LE},    q{SDL_AUDIO_S16LE}},  q{0x8010}},
+		{{q{s16BE},    q{SDL_AUDIO_S16BE}},  q{0x9010}},
 		
-		{{q{s32LE},  q{SDL_AUDIO_S32LE}},  q{0x8020}},
-		{{q{s32BE},  q{SDL_AUDIO_S32BE}},  q{0x9020}},
+		{{q{s32LE},    q{SDL_AUDIO_S32LE}},  q{0x8020}},
+		{{q{s32BE},    q{SDL_AUDIO_S32BE}},  q{0x9020}},
 		
-		{{q{f32LE},  q{SDL_AUDIO_F32LE}},  q{0x8120}},
-		{{q{f32BE},  q{SDL_AUDIO_F32BE}},  q{0x9120}},
+		{{q{f32LE},    q{SDL_AUDIO_F32LE}},  q{0x8120}},
+		{{q{f32BE},    q{SDL_AUDIO_F32BE}},  q{0x9120}},
 	];
 	version(LittleEndian){
 		EnumMember[] add = [
