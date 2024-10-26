@@ -6,34 +6,30 @@
 +/
 module sdl.cpuinfo;
 
-import bindbc.sdl.config;
-import bindbc.sdl.codegen;
+import bindbc.sdl.config, bindbc.sdl.codegen;
 
-import sdl.stdinc;
-
-enum SDL_CacheLineSize = 128;
-alias SDL_CACHELINE_SIZE = SDL_CacheLineSize;
+enum SDL_CACHELINE_SIZE = 128;
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{int}, q{SDL_GetCPUCount}, q{}},
+		{q{int}, q{SDL_GetNumLogicalCPUCores}, q{}},
 		{q{int}, q{SDL_GetCPUCacheLineSize}, q{}},
-		{q{SDL_Bool}, q{SDL_HasAltiVec}, q{}},
-		{q{SDL_Bool}, q{SDL_HasMMX}, q{}},
-		{q{SDL_Bool}, q{SDL_HasSSE}, q{}},
-		{q{SDL_Bool}, q{SDL_HasSSE2}, q{}},
-		{q{SDL_Bool}, q{SDL_HasSSE3}, q{}},
-		{q{SDL_Bool}, q{SDL_HasSSE41}, q{}},
-		{q{SDL_Bool}, q{SDL_HasSSE42}, q{}},
-		{q{SDL_Bool}, q{SDL_HasAVX}, q{}},
-		{q{SDL_Bool}, q{SDL_HasAVX2}, q{}},
-		{q{SDL_Bool}, q{SDL_HasAVX512F}, q{}},
-		{q{SDL_Bool}, q{SDL_HasARMSIMD}, q{}},
-		{q{SDL_Bool}, q{SDL_HasNEON}, q{}},
-		{q{SDL_Bool}, q{SDL_HasLSX}, q{}},
-		{q{SDL_Bool}, q{SDL_HasLASX}, q{}},
+		{q{bool}, q{SDL_HasAltiVec}, q{}},
+		{q{bool}, q{SDL_HasMMX}, q{}},
+		{q{bool}, q{SDL_HasSSE}, q{}},
+		{q{bool}, q{SDL_HasSSE2}, q{}},
+		{q{bool}, q{SDL_HasSSE3}, q{}},
+		{q{bool}, q{SDL_HasSSE41}, q{}},
+		{q{bool}, q{SDL_HasSSE42}, q{}},
+		{q{bool}, q{SDL_HasAVX}, q{}},
+		{q{bool}, q{SDL_HasAVX2}, q{}},
+		{q{bool}, q{SDL_HasAVX512F}, q{}},
+		{q{bool}, q{SDL_HasARMSIMD}, q{}},
+		{q{bool}, q{SDL_HasNEON}, q{}},
+		{q{bool}, q{SDL_HasLSX}, q{}},
+		{q{bool}, q{SDL_HasLASX}, q{}},
 		{q{int}, q{SDL_GetSystemRAM}, q{}},
-		{q{size_t}, q{SDL_SIMDGetAlignment}, q{}},
+		{q{size_t}, q{SDL_GetSIMDAlignment}, q{}},
 	];
 	return ret;
 }()));

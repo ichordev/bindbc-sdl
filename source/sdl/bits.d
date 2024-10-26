@@ -6,12 +6,9 @@
 +/
 module sdl.bits;
 
-import bindbc.sdl.config;
-import bindbc.sdl.codegen;
+import bindbc.sdl.config, bindbc.sdl.codegen;
 
-import sdl.stdinc;
-
-nothrow @nogc pure @safe{
+pragma(inline,true) extern(C) nothrow @nogc pure @safe{
 	int SDL_MostSignificantBitIndex32(uint x){
 		const(uint)[5] b = [0x2, 0xC, 0xF0, 0xFF00, 0xFFFF0000U];
 		const(int)[5]  s = [1, 2, 4, 8, 16];
@@ -32,3 +29,8 @@ nothrow @nogc pure @safe{
 	bool SDL_HasExactlyOneBitSet32(uint x) =>
 		x && !(x & (x - 1));
 }
+
+mixin(joinFnBinds((){
+	FnBind[] ret;
+	return ret;
+}()));

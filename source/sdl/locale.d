@@ -4,14 +4,18 @@
 +     (See accompanying file LICENSE_1_0.txt or copy at
 +           http://www.boost.org/LICENSE_1_0.txt)
 +/
-module sdl.platform;
+module sdl.locale;
 
-import bindbc.sdl.config;
-import bindbc.sdl.codegen;
+import bindbc.sdl.config, bindbc.sdl.codegen;
+
+struct SDL_Locale{
+	const(char)* language;
+	const(char)* country;
+}
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{const(char)*}, q{SDL_GetPlatform}, q{}},
+		{q{SDL_Locale**} q{SDL_GetPreferredLocales}, q{int* count}},
 	];
 	return ret;
 }()));

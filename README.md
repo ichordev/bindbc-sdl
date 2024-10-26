@@ -1,6 +1,8 @@
 ## NOTICE: All future pull requests for SDL2 support should be in the [SDL2](https://github.com/BindBC/bindbc-sdl/tree/SDL2) branch, as `~master` is now moving towards supporting SDL3 exclusively.
 
-## NOTICE: SDL 3.0 has not been officially released yet. This documentation is being written as if it is.
+## NOTICE: SDL 3.2.0 has not been officially released yet. This documentation is being written as if it is. SDL 3.1.X will not be supported after 3.2.0 releases.
+
+Based on [this commit](https://github.com/libsdl-org/SDL/commit/e292d1f5ace469f718d7b6b4dec8c28e37dcaa0e).
 
 <div align="center" width="100%">
 	<img alt="BindBC-SDL logo" width="50%" src="https://raw.githubusercontent.com/BindBC/bindbc-branding/master/logo_wide_sdl.png"/>
@@ -15,10 +17,10 @@ This project provides a set of both static and dynamic bindings to
 |[License](#license)|
 |[SDL documentation](#sdl-documentation)|
 |[Quickstart guide](#quickstart-guide)|
+|[Binding-specific changes](#binding-specific-changes)|
 |[Configurations](#configurations)|
 |[Library versions](#library-versions)|
 |[Special platforms](#special-platforms)|
-|[Windows: Loading from outside the DLL search path](#windows-loading-from-outside-the-dll-search-path)|
 
 ## License
 BindBC-SDL&mdash;as well as every other binding in the [BindBC project](https://github.com/BindBC)&mdash;is licensed under the [Boost Software License](https://www.boost.org/LICENSE_1_0.txt).
@@ -26,8 +28,9 @@ BindBC-SDL&mdash;as well as every other binding in the [BindBC project](https://
 Bear in mind that you still need to abide by [SDL's license](https://github.com/libsdl-org/SDL/blob/main/LICENSE.txt), and the licenses of any SDL_* libraries that you use through these bindings.
 
 ## SDL documentation
-This readme describes how to use BindBC-SDL, *not* SDL itself. BindBC-SDL is a direct D binding to the SDL3 API, so any existing SDL documentation and tutorials can be adapted with only minor modifications.
-* [The SDL Wiki](https://wiki.libsdl.org/FrontPage) has official documentation of the SDL API. It also has [a list of tutorials](https://wiki.libsdl.org/SDL3/Tutorials), although most still deal with SDL2 at present.
+This readme describes how to use BindBC-SDL, *not* SDL itself. BindBC-SDL is a direct D binding to the SDL3 API, so any existing SDL 3documentation and tutorials can be adapted with only minor modifications.
+* [The SDL Wiki](https://wiki.libsdl.org/SDL3/APIByCategory) has official documentation of the SDL API. It also has [a list of tutorials](https://wiki.libsdl.org/SDL3/Tutorials), although most still deal with SDL2 at present.
+* [Layers All The Way Down](https://moonside.games/posts/layers-all-the-way-down/) has a broad explanation of rendering and SDL3's GPU API.
 * [How to migrate from SDL 2.0](https://github.com/libsdl-org/SDL/blob/main/docs/README-migration.md).
 
 > [!NOTE]\
@@ -39,12 +42,12 @@ To use BindBC-SDL in your dub project, add it to the list of `dependencies` in y
 Example __dub.json__
 ```json
 "dependencies": {
-	"bindbc-sdl": "~>2.0.0",
+	"bindbc-sdl": "~>2.0",
 },
 ```
 Example __dub.sdl__
 ```sdl
-dependency "bindbc-sdl" version="~>2.0.0"
+dependency "bindbc-sdl" version="~>2.0"
 ```
 
 By default, BindBC-SDL is configured to compile as a dynamic binding that is not BetterC-compatible. If you prefer static bindings or need BetterC compatibility, they can be enabled via `subConfigurations` in your dub configuration file. For configuration naming & more details, see [Configurations](#configurations).
@@ -60,14 +63,14 @@ Example __dub.sdl__
 subConfiguration "bindbc-sdl" "staticBC"
 ```
 
-If you need to use the SDL_* libraries, or versions of SDL newer than 3.0.0, then you will have to add the appropriate version identifiers to `versions` in your dub configuration. For a list of library version identifiers, see [Library versions](#library-versions).
+If you need to use the SDL_* libraries, or versions of SDL newer than 3.2.0, then you will have to add the appropriate version identifiers to `versions` in your dub configuration. For a list of library version identifiers, see [Library versions](#library-versions).
 
 If you're using static bindings, then you will also need to add the name of each library you're using to `libs`.
 
 Example __dub.json__
 ```json
 "versions": [
-	"SDL_3_2", "SDL_Net_3_0",
+	"SDL_3_4", "SDL_Net_3_0",
 ],
 "libs": [
 	"SDL3", "SDL3_net",
@@ -75,7 +78,7 @@ Example __dub.json__
 ```
 Example __dub.sdl__
 ```sdl
-versions "SDL_3_2" "SDL_Net_3_2"
+versions "SDL_3_4" "SDL_Net_3_0"
 libs "SDL3" "SDL3_net"
 ```
 
@@ -180,7 +183,7 @@ bool loadLib(){
 				itoa(version_.major)~"."~
 				itoa(version_.minor)~"."~
 				itoa(version_.patch)~
-				". Please upgrade to 3.2.0+.";
+				". Please upgrade to 3.5.0+.";
 		}
 		//A hypothetical message box function
 		showMessageBox(msg);
@@ -189,6 +192,14 @@ bool loadLib(){
 	return true;
 }
 ```
+
+## Binding-specific changes
+Enums are available both in their original C-style `UPPER_SNAKE_CASE` form, and as the D-style `PascalCase.camelCase`. Both variants are enabled by default, but can be selectively chosen using the version identifiers `SDL_C_Enums_Only` or `SDL_D_Enums_Only` respectively.
+
+> [!NOTE]\
+> The version identifiers `BindBC_C_Enums_Only` and `BindBC_D_Enums_Only` can be used to configure all of the applicable _official_ BindBC packages used in your program. Package-specific version identifiers override this.
+
+`camelCase`d variants are available for struct fields using `snake_case` or `lowercase`.
 
 ## Configurations
 BindBC-SDL has the following configurations:
@@ -210,7 +221,7 @@ On other systems, it usually means installing the SDL shared libraries through a
 
 It is recommended that you always select the minimum version you require _and no higher_.
 If a lower version is loaded then it's still possible to call functions available in that lower version, but any calls to functions from versions between that version and the one you configured will result in a null pointer access.
-For example, if you configured SDL to 3.4.0 (`SDL_3_4`) but loaded SDL 3.0.0 at runtime, then any function pointers from 3.4.0 and 3.2.0 will be `null`. For this reason, it's recommended to always specify your required version of the SDL library at compile time and unconditionally abort when you receive an `LoadMsg.badLibrary` return value from `loadSDL` (or equivalent).
+For example, if you configured SDL to 3.6.0 (`SDL_3_6`) but loaded SDL 3.2.0 at runtime, then any function pointers from 3.6.0 and 3.4.0 will be `null`. For this reason, it's recommended to always specify your required version of the SDL library at compile time and unconditionally abort when you receive an `LoadMsg.badLibrary` return value from `loadSDL` (or equivalent).
 
 The function `isSDLLoaded` returns `true` if any version of the shared library has been loaded and `false` if not. `unloadSDL` can be used to unload a successfully loaded shared library. The SDL_* libraries provide similar functions: `isSDLImageLoaded`, `unloadSDLImage`, etc.
 
@@ -240,7 +251,7 @@ These are the supported versions of each SDL_* library, along with the correspon
 
 | Version     |Version identifier|
 |-------------|------------------|
-| 3.0.0       | (none; default)  |
+| 3.2.0       | (none; default)  |
 
 
 </details>
@@ -286,41 +297,20 @@ If you intend to compile for any of these platforms, please add the correspondin
 
 | Platform                       | Version identifier |
 |--------------------------------|--------------------|
+| Nintendo 3DS                   | `_3DS`             | //seen
 | DirectFB                       | `DirectFB`         |
+| Microsoft Game Development Kit | `GDK`              | //SEEN; for WinGDK & XBox
 | KMS/DRM                        | `KMSDRM`           |
 | Mir-server                     | `Mir`              |
 | Operating System/2             | `OS2`              |
 | Vivante                        | `Vivante`          |
-| Microsoft Game Development Kit | `WinGDK`           |
+| Sony Vita                      | `Vita`             | //seen
+| Microsoft Game Development Kit | `WinGDK`           | //; for on Windows only
 | Windows Runtime                | `WinRT`            |
-
-## Windows: Loading from outside the DLL search path
-The SDL libraries load some dependency DLLs dynamically in the same way that BindBC can load libraries dynamically. There is an issue that can arise on Windows when putting some of the SDL DLLs in a subdirectory of your executable directory. That is, if your executable is (for example) in the directory `myapp`, and the SDL DLLs are in the directory `myapp\libs`, you may find that one or more of the SDL libraries fails to load. To solve or prevent this problem, take the following steps:
-
-First, make sure the non-system libraries on which the SDL libraries depend (such as `zlib.dll`) are in the same directory as the SDL libraries.
-
-Second, you'll want to add your subdirectory path to the Windows DLL search path. This can be accomplished via the function `setCustomLoaderSearchPath` in `BindBC-Loader`. For more details, see ["Default Windows search path"](https://github.com/BindBC/bindbc-loader#default-windows-search-path) from the BindBC-Loader readme.
-
-The idea is that you call the function with the path to all of the DLLs before calling any of the load functions, then call it again with a `null` argument to reset to the default search path. Bear in mind that some of the SDL_* libraries load their dependencies lazily. For example, SDL_image will only load `libpng` when `IMG_Init` is called with the `IMG_INIT_PNG` flag, so the second call should not occur until after the libraries have been initialised.
-
-```d
-import bindbc.loader,
-	bindbc.sdl;
-
-// Assume the DLLs are stored in the "dlls" subdirectory
-version(Windows) setCustomLoaderSearchPath("dlls");
-
-if(loadSDL() < sdlSupport) { /* handle error */ }
-if(loadSDLImage() < sdlImageSupport) { /* handle error */ }
-
-// Give SDL_image a chance to load libpng and libjpeg
-auto flags = IMG_INIT_PNG | IMG_INIT_JPEG;
-if(IMG_Init(flags) != flags) { /* handle error */ }
-
-// Now reset the default loader search path
-version(Windows) setCustomLoaderSearchPath(null);
-```
-
-It is not strictly necessary to reset the default search path, but doing so can avoid unexpected issues for any other dependencies that may be loaded dynamically by an application's process.
-
-`setCustomLoaderSearchPath` is only implemented on Windows. I know of no way to programmatically manipulate the default search path on Linux or other platforms (please correct me if I'm wrong). Then again, this issue doesn't generally arise on those platforms.
+//consider:
+| Sony PSP                       | `PSP`              |
+| RISC OS                        | `RISCOS`           |
+HP-UX
+IRIX
+BSDi
+SDL_PLATFORM_LINUX øverwrites SDL_PLATFORM_ANDROID

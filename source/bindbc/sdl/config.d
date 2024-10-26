@@ -7,7 +7,7 @@
 +/
 module bindbc.sdl.config;
 
-public import bindbc.common.types: c_long, c_ulong, va_list, wchar_t;
+public import bindbc.common.types: c_long, c_ulong, c_longlong, c_ulonglong, c_int64, c_uint64, va_list, wchar_t;
 public import bindbc.common.versions: Version;
 
 enum staticBinding = (){
@@ -31,26 +31,26 @@ enum dStyleEnums = (){
 }();
 
 enum sdlVersion = (){
-	/+version(SDL_3_2)  return Version(3,2,0);
-	else+/              return Version(3,0,0);
+	/+version(SDL_3_4)    return Version(3,4,0);
+	else+/                return Version(3,2,0);
 }();
 
 enum sdlImageVersion = (){
-	version(SDL_Image_3_0)  return Version(3,0,0);
-	else                    return Version.none;
+	version(SDL_Image_3_0)    return Version(3,0,0);
+	else                      return Version.none;
 }();
 
 enum sdlMixerVersion = (){
-	version(SDL_Mixer_3_0)  return Version(3,0,0);
-	else                    return Version.none;
+	version(SDL_Mixer_3_0)    return Version(3,0,0);
+	else                      return Version.none;
 }();
 
 enum sdlNetVersion = (){
-	version(SDL_Net_3_0)  return Version(3,0,0);
-	else                  return Version.none;
+	version(SDL_Net_3_0)    return Version(3,0,0);
+	else                    return Version.none;
 }();
 
 enum sdlTTFVersion = (){
-	version(SDL_TTF_3_0)  return Version(3,0,0);
-	else                  return Version.none;
+	version(SDL_TTF_3_0)    return Version(3,0,0);
+	else                    return Version.none;
 }();
