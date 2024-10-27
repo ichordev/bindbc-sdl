@@ -32,6 +32,7 @@ This readme describes how to use BindBC-SDL, *not* SDL itself. BindBC-SDL is a d
 * [The SDL Wiki](https://wiki.libsdl.org/SDL3/APIByCategory) has official documentation of the SDL API. It also has [a list of tutorials](https://wiki.libsdl.org/SDL3/Tutorials), although most still deal with SDL2 at present.
 * [Layers All The Way Down](https://moonside.games/posts/layers-all-the-way-down/) has a broad explanation of rendering and SDL3's GPU API.
 * [How to migrate from SDL 2.0](https://github.com/libsdl-org/SDL/blob/main/docs/README-migration.md).
+* [Lazy Foo' Productions' SDL3 tutorials](https://lazyfoo.net/tutorials/SDL3/index.php) are aimed at C++ programmers, and give a good overview of the SDL3 API.
 
 > [!NOTE]\
 > The bindings for `SDL_atomics.h` have not been thoroughly tested. If the `SDL_atomics` binding causes trouble and you don't need to use it, you can supply the version identifier `SDL_No_Atomics` and the module's contents will not be compiled. If it's causing trouble and you need it, please report an issue.
@@ -314,3 +315,7 @@ HP-UX
 IRIX
 BSDi
 SDL_PLATFORM_LINUX øverwrites SDL_PLATFORM_ANDROID
+
+TODO:
+- go through all structs & inline some fields
+- create prefixless aliases in package
