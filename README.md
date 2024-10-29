@@ -306,16 +306,90 @@ If you intend to compile for any of these platforms, please add the correspondin
 | Operating System/2             | `OS2`              |
 | Vivante                        | `Vivante`          |
 | Sony Vita                      | `Vita`             | //seen
-| Microsoft Game Development Kit | `WinGDK`           | //; for on Windows only
+| Microsoft Game Development Kit | `WinGDK`           | // => replace with version(GDK) + version(Windows)
 | Windows Runtime                | `WinRT`            |
 //consider:
-| Sony PSP                       | `PSP`              |
+| Sony PSP                       | `PSP`              | //seen
 | RISC OS                        | `RISCOS`           |
 HP-UX
 IRIX
 BSDi
-SDL_PLATFORM_LINUX øverwrites SDL_PLATFORM_ANDROID
+
+NOTE: SDL_PLATFORM_ANDROID overwrites SDL_PLATFORM_LINUX
 
 TODO:
 - go through all structs & inline some fields
 - create prefixless aliases in package
+- check if all Flags are pluralised
+
+EXPLAIN:
+- `SDL_MainUnicode` makes SDL's main use UCS-2 on applicable Microsoft platforms
+- `SDL_Gesture` enables sdl.gesture!
+
+
+## SDL_main.h
+It is recommended that you read this first: [README-main-functions.md](https://github.com/libsdl-org/SDL/blob/main/docs/README-main-functions.md)
+
+In BindBC-SDL, `sdl.main` is imported by default. However, does **NOT** mean that SDL will replace your main function by default.
+
+If you want SDL to replace your main function, you will have to wrap your main function's parameters names & body in a mixin of `makeSDLMain`:
+```d
+mixin(makeSDLMain(q{argC}, q{argV}, q{
+	import core.stdc.stdio;
+	foreach(argument; argV[0..argC]){
+		printf("%s\n", argument);
+	}
+	return 0;
+}));
+```
+Using `makeSDLMain` like this is equivalent to using `#include <SDL3/SDL_main.h>` in C.
+
+> [!NOTE]\
+> When using this feature, your provided main function will always be `extern(C) nothrow`, take `(int, char**)` as its parameters, and must return `int`. Having an `extern(C)` main means that you need to handle some tasks (e.g. runtime initialisation & termination) that are normally taken care of for you by D's runtime.
+> See the [`extern(C)` main spec](https://dlang.org/spec/function.html#betterc-main).
+
+If you want to use the callback functions, then you also need to use version identifier `SDL_MainUseCallbacks`, and anything passed to the parameters of `makeSDLMain` will be ignored. Here's an example that initialises & terminates DRuntime, and has basic exception handling.
+```
+import core.runtime, core.stdc.stdio;
+
+mixin(makeSDLMain()); //makeSDLMain's parameters are optional
+
+version SDL_MainUseCallbacks{
+	extern(C) SDL_AppResult SDL_AppInit(void** state, int argC, char** argV) nothrow{
+		try{
+			if(!rt_init()) return SDL_AppResult.failure;
+		}catch(Exception ex){
+			return SDL_AppResult.failure;
+		}
+		return SDL_AppResult.continue_;
+	}
+	
+	extern(C) SDL_AppResult SDL_AppIterate(void* state) nothrow{
+		try{
+			/*
+			Put your code that can throw exceptions here!
+			*/
+		}catch(Throwable t){
+			void sink(in char[] buf) scope nothrow{
+				fwrite(buf.ptr, char.sizeof, buf.length, stderr);
+			}
+			do{
+				try t.toString(&sink);
+				catch(Exception) return SDL_AppResult.failure;
+			}while((t = t.next) !is null);
+			printf("\n");
+			return SDL_AppResult.failure;
+		}
+		return SDL_AppResult.success;
+	}
+	
+	extern(C) SDL_AppResult SDL_AppEvent(void* state, SDL_Event* event) nothrow => SDL_AppResult.continue_;
+	
+	extern(C) void SDL_AppQuit(void*, SDL_AppResult result) nothrow{
+		try rt_term();
+		catch(Exception ex){}
+	}
+}
+```
+> [!NOTE]\
+> This example code does **NOT** support unittests, and doesn't run any module constructors/destructors. Look at how DRuntime implements these features if you need them in your project.

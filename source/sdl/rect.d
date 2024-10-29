@@ -55,7 +55,7 @@ pragma(inline,true) extern(C) nothrow @nogc{
 		));
 	
 	bool SDL_RectsEqualFloat(const(SDL_FRect)* a, const(SDL_FRect)* b) @safe =>
-		SDL_RectsEqualEpsilon(a, b, SDL_FLT_EPSILON);
+		SDL_RectsEqualEpsilon(a, b, float.epsilon);
 }
 
 mixin(joinFnBinds((){

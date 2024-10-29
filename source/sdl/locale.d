@@ -15,7 +15,7 @@ struct SDL_Locale{
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{SDL_Locale**} q{SDL_GetPreferredLocales}, q{int* count}},
+		{q{SDL_Locale**}, q{SDL_GetPreferredLocales}, q{int* count}},
 	];
 	return ret;
 }()));

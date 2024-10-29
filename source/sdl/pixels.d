@@ -90,8 +90,8 @@ mixin(makeEnumBind(q{SDL_PackedLayout}, members: (){
 }()));
 
 pragma(inline,true) extern(C) nothrow @nogc pure @safe{
-	uint SDL_DEFINE_PIXELFOURCC(char a, char b, char c, char d)  =>
-		SDL_FOURCC(A, B, C, D);
+	uint SDL_DEFINE_PIXELFOURCC(char a, char b, char c, char d) =>
+		SDL_FOURCC(a, b, c, d);
 	
 	uint SDL_DEFINE_PIXELFORMAT(SDL_PixelType type, int order, int layout, uint bits, uint bytes) =>
 		(1 << 28) | (type << 24) | (order << 20) | (layout << 16) | (bits << 8) | bytes;
@@ -350,6 +350,25 @@ mixin(makeEnumBind(q{SDL_ChromaLocation}, members: (){
 	return ret;
 }()));
 
+mixin(makeEnumBind(q{SDL_Colourspace}, aliases: [q{SDL_Colorspace}], members: (){
+	EnumMember[] ret = [
+		{{q{unknown},          q{SDL_COLOURSPACE_UNKNOWN}},           q{0}, aliases: [{c: q{SDL_COLORSPACE_UNKNOWN}}]},
+		{{q{srgb},             q{SDL_COLOURSPACE_SRGB}},              q{0x1200_05A0U}, aliases: [{c: q{SDL_COLORSPACE_SRGB}}]},
+		{{q{srgbLinear},       q{SDL_COLOURSPACE_SRGB_LINEAR}},       q{0x1200_0500U}, aliases: [{c: q{SDL_COLORSPACE_SRGB_LINEAR}}]},
+		{{q{hdr10},            q{SDL_COLOURSPACE_HDR10}},             q{0x1200_2600U}, aliases: [{c: q{SDL_COLORSPACE_HDR10}}]},
+		{{q{jpeg},             q{SDL_COLOURSPACE_JPEG}},              q{0x2200_04C6U}, aliases: [{c: q{SDL_COLORSPACE_JPEG}}]},
+		{{q{bt601Limited},     q{SDL_COLOURSPACE_BT601_LIMITED}},     q{0x2110_18C6U}, aliases: [{c: q{SDL_COLORSPACE_BT601_LIMITED}}]},
+		{{q{bt601Full},        q{SDL_COLOURSPACE_BT601_FULL}},        q{0x2210_18C6U}, aliases: [{c: q{SDL_COLORSPACE_BT601_FULL}}]},
+		{{q{bt709Limited},     q{SDL_COLOURSPACE_BT709_LIMITED}},     q{0x2110_0421U}, aliases: [{c: q{SDL_COLORSPACE_BT709_LIMITED}}]},
+		{{q{bt709Full},        q{SDL_COLOURSPACE_BT709_FULL}},        q{0x2210_0421U}, aliases: [{c: q{SDL_COLORSPACE_BT709_FULL}}]},
+		{{q{bt2020Limited},    q{SDL_COLOURSPACE_BT2020_LIMITED}},    q{0x2110_2609U}, aliases: [{c: q{SDL_COLORSPACE_BT2020_LIMITED}}]},
+		{{q{bt2020Full},       q{SDL_COLOURSPACE_BT2020_FULL}},       q{0x2210_2609U}, aliases: [{c: q{SDL_COLORSPACE_BT2020_FULL}}]},
+		{{q{rgbDefault},       q{SDL_COLOURSPACE_RGB_DEFAULT}},       q{srgb}, aliases: [{c: q{SDL_COLORSPACE_RGB_DEFAULT}}]},
+		{{q{yuvDefault},       q{SDL_COLOURSPACE_YUV_DEFAULT}},       q{jpeg}, aliases: [{c: q{SDL_COLORSPACE_YUV_DEFAULT}}]},
+	];
+	return ret;
+}()));
+
 pragma(inline,true) extern(C) nothrow @nogc pure @safe{
 	uint SDL_DEFINE_COLOURSPACE(
 		SDL_ColourType type, SDL_ColourRange range, SDL_ColourPrimaries primaries,
@@ -405,25 +424,6 @@ pragma(inline,true) extern(C) nothrow @nogc pure @safe{
 	alias SDL_ISCOLORSPACE_FULL_RANGE = SDL_ISCOLOURSPACE_FULL_RANGE;
 }
 
-mixin(makeEnumBind(q{SDL_Colourspace}, aliases: [q{SDL_Colorspace}], members: (){
-	EnumMember[] ret = [
-		{{q{unknown},          q{SDL_COLOURSPACE_UNKNOWN}},           q{0}, aliases: [{c: q{SDL_COLORSPACE_UNKNOWN}}]},
-		{{q{srgb},             q{SDL_COLOURSPACE_SRGB}},              q{0x1200_05A0U}, aliases: [{c: q{SDL_COLORSPACE_SRGB}}]},
-		{{q{srgbLinear},       q{SDL_COLOURSPACE_SRGB_LINEAR}},       q{0x1200_0500U}, aliases: [{c: q{SDL_COLORSPACE_SRGB_LINEAR}}]},
-		{{q{hdr10},            q{SDL_COLOURSPACE_HDR10}},             q{0x1200_2600U}, aliases: [{c: q{SDL_COLORSPACE_HDR10}}]},
-		{{q{jpeg},             q{SDL_COLOURSPACE_JPEG}},              q{0x2200_04C6U}, aliases: [{c: q{SDL_COLORSPACE_JPEG}}]},
-		{{q{bt601Limited},     q{SDL_COLOURSPACE_BT601_LIMITED}},     q{0x2110_18C6U}, aliases: [{c: q{SDL_COLORSPACE_BT601_LIMITED}}]},
-		{{q{bt601Full},        q{SDL_COLOURSPACE_BT601_FULL}},        q{0x2210_18C6U}, aliases: [{c: q{SDL_COLORSPACE_BT601_FULL}}]},
-		{{q{bt709Limited},     q{SDL_COLOURSPACE_BT709_LIMITED}},     q{0x2110_0421U}, aliases: [{c: q{SDL_COLORSPACE_BT709_LIMITED}}]},
-		{{q{bt709Full},        q{SDL_COLOURSPACE_BT709_FULL}},        q{0x2210_0421U}, aliases: [{c: q{SDL_COLORSPACE_BT709_FULL}}]},
-		{{q{bt2020Limited},    q{SDL_COLOURSPACE_BT2020_LIMITED}},    q{0x2110_2609U}, aliases: [{c: q{SDL_COLORSPACE_BT2020_LIMITED}}]},
-		{{q{bt2020Full},       q{SDL_COLOURSPACE_BT2020_FULL}},       q{0x2210_2609U}, aliases: [{c: q{SDL_COLORSPACE_BT2020_FULL}}]},
-		{{q{rgbDefault},       q{SDL_COLOURSPACE_RGB_DEFAULT}},       q{SDL_Colourspace.srgb}, aliases: [{c: q{SDL_COLORSPACE_RGB_DEFAULT}}]},
-		{{q{yuvDefault},       q{SDL_COLOURSPACE_YUV_DEFAULT}},       q{SDL_Colourspace.jpeg}, aliases: [{c: q{SDL_COLORSPACE_YUV_DEFAULT}}]},
-	];
-	return ret;
-}()));
-
 struct SDL_Colour{
 	ubyte r, g, b, a;
 }
@@ -449,8 +449,7 @@ struct SDL_Palette{
 
 struct SDL_PixelFormatDetails{
 	SDL_PixelFormat format;
-	ubyte bitsPerPixel;
-	ubyte bytesPerPixel;
+	ubyte bitsPerPixel, bytesPerPixel;
 	ubyte[2] padding;
 	uint rMask, gMask, bMask, aMask;
 	ubyte rBits, gBits, bBits, aBits;

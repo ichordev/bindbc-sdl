@@ -12,40 +12,53 @@ import sdl.joystick: SDL_Joystick;
 
 struct SDL_Haptic;
 
-private enum EnumMember[] hapticTypesAndFeatures = [
-	{{q{constant},     q{SDL_HAPTIC_CONSTANT}},     q{1U <<  0}},
-	{{q{sine},         q{SDL_HAPTIC_SINE}},         q{1U <<  1}},
-	{{q{square},       q{SDL_HAPTIC_SQUARE}},       q{1U <<  2}},
-	{{q{triangle},     q{SDL_HAPTIC_TRIANGLE}},     q{1U <<  3}},
-	{{q{sawtoothUp},   q{SDL_HAPTIC_SAWTOOTHUP}},   q{1U <<  4}},
-	{{q{sawtoothDown}, q{SDL_HAPTIC_SAWTOOTHDOWN}}, q{1U <<  5}},
-	{{q{ramp},         q{SDL_HAPTIC_RAMP}},         q{1U <<  6}},
-	{{q{spring},       q{SDL_HAPTIC_SPRING}},       q{1U <<  7}},
-	{{q{damper},       q{SDL_HAPTIC_DAMPER}},       q{1U <<  8}},
-	{{q{inertia},      q{SDL_HAPTIC_INERTIA}},      q{1U <<  9}},
-	{{q{friction},     q{SDL_HAPTIC_FRICTION}},     q{1U << 10}},
-	{{q{leftRight},    q{SDL_HAPTIC_LEFTRIGHT}},    q{1U << 11}},
-	{{q{reserved1},    q{SDL_HAPTIC_RESERVED1}},    q{1U << 12}},
-	{{q{reserved2},    q{SDL_HAPTIC_RESERVED2}},    q{1U << 13}},
-	{{q{reserved3},    q{SDL_HAPTIC_RESERVED3}},    q{1U << 14}},
-	{{q{custom},       q{SDL_HAPTIC_CUSTOM}},       q{1U << 15}},
-];
-
 alias SDL_HapticType_ = ushort;
-mixin(makeEnumBind(q{SDL_HapticType}, q{SDL_HapticType_}, members: hapticTypesAndFeatures));
+mixin(makeEnumBind(q{SDL_HapticType}, q{SDL_HapticType_}, members: (){
+	EnumMember[] ret = [
+		{{q{constant},     q{SDL_HAPTIC_CONSTANT}},     q{1U <<  0}},
+		{{q{sine},         q{SDL_HAPTIC_SINE}},         q{1U <<  1}},
+		{{q{square},       q{SDL_HAPTIC_SQUARE}},       q{1U <<  2}},
+		{{q{triangle},     q{SDL_HAPTIC_TRIANGLE}},     q{1U <<  3}},
+		{{q{sawtoothUp},   q{SDL_HAPTIC_SAWTOOTHUP}},   q{1U <<  4}},
+		{{q{sawtoothDown}, q{SDL_HAPTIC_SAWTOOTHDOWN}}, q{1U <<  5}},
+		{{q{ramp},         q{SDL_HAPTIC_RAMP}},         q{1U <<  6}},
+		{{q{spring},       q{SDL_HAPTIC_SPRING}},       q{1U <<  7}},
+		{{q{damper},       q{SDL_HAPTIC_DAMPER}},       q{1U <<  8}},
+		{{q{inertia},      q{SDL_HAPTIC_INERTIA}},      q{1U <<  9}},
+		{{q{friction},     q{SDL_HAPTIC_FRICTION}},     q{1U << 10}},
+		{{q{leftRight},    q{SDL_HAPTIC_LEFTRIGHT}},    q{1U << 11}},
+		{{q{reserved1},    q{SDL_HAPTIC_RESERVED1}},    q{1U << 12}},
+		{{q{reserved2},    q{SDL_HAPTIC_RESERVED2}},    q{1U << 13}},
+		{{q{reserved3},    q{SDL_HAPTIC_RESERVED3}},    q{1U << 14}},
+		{{q{custom},       q{SDL_HAPTIC_CUSTOM}},       q{1U << 15}},
+	];
+	return ret;
+}()));
 
 alias SDL_HapticFeature_ = uint;
 mixin(makeEnumBind(q{SDL_HapticFeature}, q{SDL_HapticFeature_}, members: (){
-	EnumMember[] ret = hapticTypesAndFeatures;
-	{
-		EnumMember[] add = [
-			{{q{gain},          q{SDL_HAPTIC_GAIN}},          q{1U << 16}},
-			{{q{autocentre},    q{SDL_HAPTIC_AUTOCENTRE}},    q{1U << 17}, aliases: [{q{autocenter}, q{SDL_HAPTIC_AUTOCENTER}}]},
-			{{q{status},        q{SDL_HAPTIC_STATUS}},        q{1U << 18}},
-			{{q{pause},         q{SDL_HAPTIC_PAUSE}},         q{1U << 19}},
-		];
-		ret ~= add;
-	}
+	EnumMember[] ret = [
+		{{q{constant}},                                   q{1U <<  0}},
+		{{q{sine}},                                       q{1U <<  1}},
+		{{q{square}},                                     q{1U <<  2}},
+		{{q{triangle}},                                   q{1U <<  3}},
+		{{q{sawtoothUp}},                                 q{1U <<  4}},
+		{{q{sawtoothDown}},                               q{1U <<  5}},
+		{{q{ramp}},                                       q{1U <<  6}},
+		{{q{spring}},                                     q{1U <<  7}},
+		{{q{damper}},                                     q{1U <<  8}},
+		{{q{inertia}},                                    q{1U <<  9}},
+		{{q{friction}},                                   q{1U << 10}},
+		{{q{leftRight}},                                  q{1U << 11}},
+		{{q{reserved1}},                                  q{1U << 12}},
+		{{q{reserved2}},                                  q{1U << 13}},
+		{{q{reserved3}},                                  q{1U << 14}},
+		{{q{custom}},                                     q{1U << 15}},
+		{{q{gain},          q{SDL_HAPTIC_GAIN}},          q{1U << 16}},
+		{{q{autoCentre},    q{SDL_HAPTIC_AUTOCENTRE}},    q{1U << 17}, aliases: [{q{autoCenter}, q{SDL_HAPTIC_AUTOCENTER}}]},
+		{{q{status},        q{SDL_HAPTIC_STATUS}},        q{1U << 18}},
+		{{q{pause},         q{SDL_HAPTIC_PAUSE}},         q{1U << 19}},
+	];
 	return ret;
 }()));
 
@@ -56,8 +69,8 @@ mixin(makeEnumBind(q{SDL_HapticDirectionType}, q{SDL_HapticDirectionType_}, alia
 		{{q{cartesian},       q{SDL_HAPTIC_CARTESIAN}},        q{1}},
 		{{q{spherical},       q{SDL_HAPTIC_SPHERICAL}},        q{2}},
 		{{q{steeringAxis},    q{SDL_HAPTIC_STEERING_AXIS}},    q{3}},
-		];
-		return ret;
+	];
+	return ret;
 }()));
 
 enum SDL_HAPTIC_INFINITY = 4_294_967_295U;
@@ -197,7 +210,7 @@ mixin(joinFnBinds((){
 		{q{void}, q{SDL_DestroyHapticEffect}, q{SDL_Haptic* haptic, int effect}},
 		{q{bool}, q{SDL_GetHapticEffectStatus}, q{SDL_Haptic* haptic, int effect}},
 		{q{bool}, q{SDL_SetHapticGain}, q{SDL_Haptic* haptic, int gain}},
-		{q{bool}, q{SDL_SetHapticAutocenter}, q{SDL_Haptic* haptic, int autocentre}, aliases: [q{SDL_SetHapticAutocentre}]},
+		{q{bool}, q{SDL_SetHapticAutocenter}, q{SDL_Haptic* haptic, int autoCentre}, aliases: [q{SDL_SetHapticAutoCentre}, q{SDL_SetHapticAutoCenter}]},
 		{q{bool}, q{SDL_PauseHaptic}, q{SDL_Haptic* haptic}},
 		{q{bool}, q{SDL_ResumeHaptic}, q{SDL_Haptic* haptic}},
 		{q{bool}, q{SDL_StopHapticEffects}, q{SDL_Haptic* haptic}},

@@ -8,10 +8,10 @@ module sdl.vulkan;
 
 import bindbc.sdl.config, bindbc.sdl.codegen;
 
+import sdl.stdinc: SDL_FunctionPointer;
 import sdl.video: SDL_Window;
 
 alias VkInstance = void*;
-alias VkPhysicalDevice = void*;
 alias VkPhysicalDevice = void*;
 alias VkSurfaceKHR = ulong;
 struct VkAllocationCallbacks;

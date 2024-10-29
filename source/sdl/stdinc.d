@@ -63,6 +63,7 @@ enum double SDL_PI_D = 3.141592653589793238462643383279502884;
 enum float  SDL_PI_F = 3.141592653589793238462643383279502884f;
 
 mixin(makeEnumBind(q{SDL_IConvError}, q{SDL_iconv_t}, members: (){
+	EnumMember[] ret = [
 		{{q{error},    q{SDL_ICONV_ERROR}},   q{cast(SDL_iconv_t)-1}},
 		{{q{_2Big},    q{SDL_ICONV_E2BIG}},   q{cast(SDL_iconv_t)-2}},
 		{{q{ilSeq},    q{SDL_ICONV_EILSEQ}},  q{cast(SDL_iconv_t)-3}},

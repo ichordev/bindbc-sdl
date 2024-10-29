@@ -8,11 +8,11 @@ module sdl.gpu;
 
 import bindbc.sdl.config, bindbc.sdl.codegen;
 
-import sdL.pixels: SDL_FColour;
-import sdL.properties: SDL_PropertiesID;
-import sdL.rect: SDL_Rect;
-import sdL.surface: SDL_FlipMode;
-import sdL.video: SDL_Window;
+import sdl.pixels: SDL_FColour;
+import sdl.properties: SDL_PropertiesID;
+import sdl.rect: SDL_Rect;
+import sdl.surface: SDL_FlipMode;
+import sdl.video: SDL_Window;
 
 struct SDL_GPUDevice;
 
@@ -217,8 +217,8 @@ mixin(makeEnumBind(q{SDL_GPUTransferBufferUsage}, members: (){
 
 mixin(makeEnumBind(q{SDL_GPUShaderStage}, members: (){
 	EnumMember[] ret = [
-		{{q{SDL_GPU_SHADERSTAGE_VERTEX},      q{SDL_GPU_SHADERSTAGE_VERTEX}}},
-		{{q{SDL_GPU_SHADERSTAGE_FRAGMENT},    q{SDL_GPU_SHADERSTAGE_FRAGMENT}}},
+		{{q{vertex},      q{SDL_GPU_SHADERSTAGE_VERTEX}}},
+		{{q{fragment},    q{SDL_GPU_SHADERSTAGE_FRAGMENT}}},
 	];
 	return ret;
 }()));
@@ -761,7 +761,7 @@ struct SDL_GPUDepthStencilState{
 
 struct SDL_GPUColourTargetDescription{
 	SDL_GPUTextureFormat format;
-	SDL_GPUColourTargetBlendState blend_state;
+	SDL_GPUColourTargetBlendState blendState;
 	
 	alias blend_state = blendState;
 }

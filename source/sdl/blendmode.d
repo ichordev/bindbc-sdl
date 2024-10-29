@@ -52,7 +52,7 @@ mixin(makeEnumBind(q{SDL_BlendFactor}, members: (){
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{SDL_BlendMode_}, q{SDL_ComposeCustomBlendMode}, q{SDL_BlendFactor srcColourFactor, SDL_BlendFactor dstColourFactor, SDL_BlendOperation colourOperation, SDL_BlendFactor srcAlphaFactor, SDL_BlendFactor dstAlphaFactor, SDL_BlendOperation alphaOperation}},
+		{q{SDL_BlendMode}, q{SDL_ComposeCustomBlendMode}, q{SDL_BlendFactor srcColourFactor, SDL_BlendFactor dstColourFactor, SDL_BlendOperation colourOperation, SDL_BlendFactor srcAlphaFactor, SDL_BlendFactor dstAlphaFactor, SDL_BlendOperation alphaOperation}},
 	];
 	return ret;
 }()));

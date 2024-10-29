@@ -8,6 +8,8 @@ module sdl.loadso;
 
 import bindbc.sdl.config, bindbc.sdl.codegen;
 
+import sdl.stdinc: SDL_FunctionPointer;
+
 struct SDL_SharedObject;
 
 mixin(joinFnBinds((){
