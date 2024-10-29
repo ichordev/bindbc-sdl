@@ -99,7 +99,7 @@ struct SDL_AtomicInt{
 	int value;
 }
 
-pragma(inline,true) extern(C) nothrow @nogc pure @safe{
+pragma(inline,true) extern(C) nothrow @nogc{
 	int  SDL_AtomicIncRef(SDL_AtomicInt* a) => SDL_AddAtomicInt(a,  1);
 	bool SDL_AtomicDecRef(SDL_AtomicInt* a) => SDL_AddAtomicInt(a, -1) == 1;
 }

@@ -8,11 +8,20 @@ module sdl.audio;
 
 import bindbc.sdl.config, bindbc.sdl.codegen;
 
+import sdl.iostream: SDL_IOStream;
+import sdl.properties: SDL_PropertiesID;
+
 enum{
 	SDL_AUDIO_MASK_BITSIZE     = 0xFFU,
 	SDL_AUDIO_MASK_FLOAT       = 1U <<  8,
 	SDL_AUDIO_MASK_BIG_ENDIAN  = 1U << 12,
 	SDL_AUDIO_MASK_SIGNED      = 1U << 15,
+}
+static if(dStyleEnums){
+	alias maskBitSize = SDL_AUDIO_MASK_BITSIZE;
+	alias maskFloat = SDL_AUDIO_MASK_FLOAT;
+	alias maskBigEndian = SDL_AUDIO_MASK_BIG_ENDIAN;
+	alias maskSigned = SDL_AUDIO_MASK_SIGNED;
 }
 
 pragma(inline,true) extern(C)
@@ -59,12 +68,24 @@ pragma(inline,true) extern(C) nothrow @nogc pure @safe{
 	bool SDL_AUDIO_ISLITTLEENDIAN(uint x) => (x & SDL_AUDIO_MASK_BIG_ENDIAN) == 0;
 	bool SDL_AUDIO_ISUNSIGNED(uint x)     => (x & SDL_AUDIO_MASK_SIGNED) == 0;
 }
+alias bitSize = SDL_AUDIO_BITSIZE;
+alias byteSize = SDL_AUDIO_BYTESIZE;
+alias isFloat = SDL_AUDIO_ISFLOAT;
+alias isBigEndian = SDL_AUDIO_ISBIGENDIAN;
+alias isSigned = SDL_AUDIO_ISSIGNED;
+alias isInt = SDL_AUDIO_ISINT;
+alias isLittleEndian = SDL_AUDIO_ISLITTLEENDIAN;
+alias isUnsigned = SDL_AUDIO_ISUNSIGNED;
 
 alias SDL_AudioDeviceID = uint;
 
 enum: SDL_AudioDeviceID{
-	SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK  = cast(SDL_AudioDeviceID)0xFFFFFFFFU,
-	SDL_AUDIO_DEVICE_DEFAULT_RECORDING = cast(SDL_AudioDeviceID)0xFFFFFFFEU,
+	SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK  = cast(SDL_AudioDeviceID)0xFFFF_FFFFU,
+	SDL_AUDIO_DEVICE_DEFAULT_RECORDING = cast(SDL_AudioDeviceID)0xFFFF_FFFEU,
+}
+static if(dStyleEnums){
+	alias deviceDefaultPlayback = SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK;
+	alias deviceDefaultRecording = SDL_AUDIO_DEVICE_DEFAULT_RECORDING;
 }
 
 struct SDL_AudioSpec{
@@ -76,6 +97,7 @@ struct SDL_AudioSpec{
 pragma(inline,true) extern(C)
 int SDL_AUDIO_FRAMESIZE(SDL_AudioSpec x) nothrow @nogc pure @safe =>
 	SDL_AUDIO_BYTESIZE(x.format)* x.channels;
+alias frameSize = SDL_AUDIO_FRAMESIZE;
 
 struct SDL_AudioStream;
 

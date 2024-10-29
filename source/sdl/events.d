@@ -10,16 +10,16 @@ import bindbc.sdl.config, bindbc.sdl.codegen;
 
 import sdl.audio: SDL_AudioDeviceID;
 import sdl.camera: SDL_CameraID;
-import sdl.joystick: SDL_JoystickID;
+import sdl.joystick: SDL_Hat, SDL_JoystickID;
 import sdl.keyboard: SDL_KeyboardID;
 import sdl.keycode: SDL_KeyCode, SDL_KeyMod;
-import sdl.mouse: SDL_MouseButtonFlags_;
+import sdl.mouse: SDL_MouseButton, SDL_MouseButtonFlags, SDL_MouseID, SDL_MouseWheelDirection;
 import sdl.pen: SDL_PenID, SDL_PenInputFlags_, SDL_PenAxis;
 import sdl.power: SDL_PowerState;
 import sdl.sensor: SDL_SensorID;
 import sdl.scancode: SDL_Scancode;
 import sdl.touch: SDL_TouchID, SDL_FingerID;
-import sdl.video: SDL_DisplayID, SDL_WindowID;
+import sdl.video: SDL_DisplayID, SDL_Window, SDL_WindowID;
 
 mixin(makeEnumBind(q{SDL_EventType}, q{uint}, members: (){
 	EnumMember[] ret = [
@@ -227,7 +227,7 @@ struct SDL_MouseMotionEvent{
 	c_uint64 timestamp;
 	SDL_WindowID windowID;
 	SDL_MouseID which;
-	SDL_MouseButtonFlags_ state;
+	SDL_MouseButtonFlags state;
 	float x, y;
 	float xRel, yRel;
 	
@@ -241,7 +241,7 @@ struct SDL_MouseButtonEvent{
 	c_uint64 timestamp;
 	SDL_WindowID windowID;
 	SDL_MouseID which;
-	ubyte button;
+	SDL_MouseButton button;
 	bool down;
 	ubyte clicks;
 	ubyte padding;
@@ -260,7 +260,7 @@ struct SDL_MouseWheelEvent{
 	
 	alias mouse_x = mouseX;
 	alias mouse_y = mouseY;
-} SDL_MouseWheelEvent;
+}
 
 struct SDL_JoyAxisEvent{
 	SDL_EventType type;
@@ -295,7 +295,7 @@ struct SDL_JoyHatEvent{
 	uint reserved;
 	c_uint64 timestamp;
 	SDL_JoystickID which;
-	ubyte hat;
+	SDL_Hat hat;
 	ubyte value;
 	ubyte padding1;
 	ubyte padding2;
@@ -377,7 +377,7 @@ struct SDL_GamepadSensorEvent{
 	SDL_JoystickID which;
 	int sensor;
 	float[3] data;
-	c_uint64 sensor_timestamp;
+	c_uint64 sensorTimestamp;
 	
 	alias sensor_timestamp = sensorTimestamp;
 }

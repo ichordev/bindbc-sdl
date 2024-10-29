@@ -12,7 +12,7 @@ import sdl.pixels: SDL_PixelFormat, SDL_Colourspace;
 import sdl.properties: SDL_PropertiesID;
 import sdl.surface: SDL_Surface;
 
-import SDL_CameraID = uint;
+alias SDL_CameraID = uint;
 
 struct SDL_Camera;
 

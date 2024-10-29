@@ -9,9 +9,8 @@ module sdl.surface;
 import bindbc.sdl.config, bindbc.sdl.codegen;
 
 import sdl.blendmode: SDL_BlendMode_;
-import sdl.error;
 import sdl.iostream: SDL_IOStream;
-import sdl.pixels: SDL_PixelFormat, SDL_Colourspace;
+import sdl.pixels: SDL_Colour, SDL_Colourspace, SDL_Palette, SDL_PixelFormat, SDL_PixelFormatDetails;
 import sdl.properties: SDL_PropertiesID;
 import sdl.rect: SDL_Rect;
 
@@ -50,13 +49,9 @@ mixin(makeEnumBind(q{SDL_FlipMode}, aliases: [q{SDL_Flip}], members: (){
 struct SDL_Surface{
 	SDL_SurfaceFlags_ flags;
 	SDL_PixelFormat format;
-	int w;
-	int h;
-	int pitch;
+	int w, h, pitch;
 	void* pixels;
-	
 	int refCount;
-	
 	void* reserved;
 	
 	alias refcount = refCount;
@@ -75,7 +70,7 @@ mixin(joinFnBinds((){
 		{q{SDL_PixelFormat}, q{SDL_GetPixelFormatForMasks}, q{int bpp, uint rMask, uint gMask, uint bMask, uint aMask}},
 		{q{const(SDL_PixelFormatDetails)*}, q{SDL_GetPixelFormatDetails}, q{SDL_PixelFormat format}},
 		{q{SDL_Palette*}, q{SDL_CreatePalette}, q{int nColours}},
-		{q{bool}, q{SDL_SetPaletteColors}, q{SDL_Palette* palette, const(SDL_Colour)* colours, int firstColour, int nColours}},
+		{q{bool}, q{SDL_SetPaletteColors}, q{SDL_Palette* palette, const(SDL_Colour)* colours, int firstColour, int nColours}, aliases: [q{SDL_SetPaletteColours}]},
 		{q{void}, q{SDL_DestroyPalette}, q{SDL_Palette* palette}},
 		{q{uint}, q{SDL_MapRGB}, q{const(SDL_PixelFormatDetails)* format, const(SDL_Palette)* palette, ubyte r, ubyte g, ubyte b}},
 		{q{uint}, q{SDL_MapRGBA}, q{const(SDL_PixelFormatDetails)* format, const(SDL_Palette)* palette, ubyte r, ubyte g, ubyte b, ubyte a}},
@@ -84,8 +79,8 @@ mixin(joinFnBinds((){
 		{q{SDL_Surface*}, q{SDL_CreateSurfaceFrom}, q{int width, int height, SDL_PixelFormat format, void* pixels, int pitch}},
 		{q{void}, q{SDL_DestroySurface}, q{SDL_Surface* surface}},
 		{q{SDL_PropertiesID}, q{SDL_GetSurfaceProperties}, q{SDL_Surface* surface}},
-		{q{bool}, q{SDL_SetSurfaceColorspace}, q{SDL_Surface* surface, SDL_Colourspace colourspace}},
-		{q{SDL_Colourspace}, q{SDL_GetSurfaceColorspace}, q{SDL_Surface* surface}},
+		{q{bool}, q{SDL_SetSurfaceColorspace}, q{SDL_Surface* surface, SDL_Colourspace colourspace}, aliases: [q{SDL_SetSurfaceColourspace}]},
+		{q{SDL_Colourspace}, q{SDL_GetSurfaceColorspace}, q{SDL_Surface* surface}, aliases: [q{SDL_GetSurfaceColourspace}]},
 		{q{SDL_Palette*}, q{SDL_CreateSurfacePalette}, q{SDL_Surface* surface}},
 		{q{bool}, q{SDL_SetSurfacePalette}, q{SDL_Surface* surface, SDL_Palette* palette}},
 		{q{SDL_Palette*}, q{SDL_GetSurfacePalette}, q{SDL_Surface* surface}},
@@ -101,11 +96,11 @@ mixin(joinFnBinds((){
 		{q{bool}, q{SDL_SaveBMP}, q{SDL_Surface* surface, const(char)* file}},
 		{q{bool}, q{SDL_SetSurfaceRLE}, q{SDL_Surface* surface, bool enabled}},
 		{q{bool}, q{SDL_SurfaceHasRLE}, q{SDL_Surface* surface}},
-		{q{bool}, q{SDL_SetSurfaceColorKey}, q{SDL_Surface* surface, bool enabled, uint key}},
-		{q{bool}, q{SDL_SurfaceHasColorKey}, q{SDL_Surface* surface}},
-		{q{bool}, q{SDL_GetSurfaceColorKey}, q{SDL_Surface* surface, uint* key}},
-		{q{bool}, q{SDL_SetSurfaceColorMod}, q{SDL_Surface* surface, ubyte r, ubyte g, ubyte b}},
-		{q{bool}, q{SDL_GetSurfaceColorMod}, q{SDL_Surface* surface, ubyte* r, ubyte* g, ubyte* b}},
+		{q{bool}, q{SDL_SetSurfaceColorKey}, q{SDL_Surface* surface, bool enabled, uint key}, aliases: [q{SDL_SetSurfaceColourKey}]},
+		{q{bool}, q{SDL_SurfaceHasColorKey}, q{SDL_Surface* surface}, aliases: [q{SDL_SurfaceHasColourKey}]},
+		{q{bool}, q{SDL_GetSurfaceColorKey}, q{SDL_Surface* surface, uint* key}, aliases: [q{SDL_GetSurfaceColourKey}]},
+		{q{bool}, q{SDL_SetSurfaceColorMod}, q{SDL_Surface* surface, ubyte r, ubyte g, ubyte b}, aliases: [q{SDL_SetSurfaceColourMod}]},
+		{q{bool}, q{SDL_GetSurfaceColorMod}, q{SDL_Surface* surface, ubyte* r, ubyte* g, ubyte* b}, aliases: [q{SDL_GetSurfaceColourMod}]},
 		{q{bool}, q{SDL_SetSurfaceAlphaMod}, q{SDL_Surface* surface, ubyte alpha}},
 		{q{bool}, q{SDL_GetSurfaceAlphaMod}, q{SDL_Surface* surface, ubyte* alpha}},
 		{q{bool}, q{SDL_SetSurfaceBlendMode}, q{SDL_Surface* surface, SDL_BlendMode_ blendMode}},
@@ -116,9 +111,9 @@ mixin(joinFnBinds((){
 		{q{SDL_Surface*}, q{SDL_DuplicateSurface}, q{SDL_Surface* surface}},
 		{q{SDL_Surface*}, q{SDL_ScaleSurface}, q{SDL_Surface* surface, int width, int height, SDL_ScaleMode scaleMode}},
 		{q{SDL_Surface*}, q{SDL_ConvertSurface}, q{SDL_Surface* surface, SDL_PixelFormat format}},
-		{q{SDL_Surface*}, q{SDL_ConvertSurfaceAndColorspace}, q{SDL_Surface* surface, SDL_PixelFormat format, SDL_Palette* palette, SDL_Colourspace colourspace, SDL_PropertiesID props}},
+		{q{SDL_Surface*}, q{SDL_ConvertSurfaceAndColorspace}, q{SDL_Surface* surface, SDL_PixelFormat format, SDL_Palette* palette, SDL_Colourspace colourspace, SDL_PropertiesID props}, aliases: [q{SDL_ConvertSurfaceAndColourspace}]},
 		{q{bool}, q{SDL_ConvertPixels}, q{int width, int height, SDL_PixelFormat srcFormat, const(void)* src, int srcPitch, SDL_PixelFormat dstFormat, void* dst, int dstPitch}},
-		{q{bool}, q{SDL_ConvertPixelsAndColorspace}, q{int width, int height, SDL_PixelFormat srcFormat, SDL_Colourspace srcColourspace, SDL_PropertiesID srcProperties, const(void)* src, int srcPitch, SDL_PixelFormat dstFormat, SDL_Colourspace dstColorspace, SDL_PropertiesID dstProperties, void* dst, int dstPitch}},
+		{q{bool}, q{SDL_ConvertPixelsAndColorspace}, q{int width, int height, SDL_PixelFormat srcFormat, SDL_Colourspace srcColourspace, SDL_PropertiesID srcProperties, const(void)* src, int srcPitch, SDL_PixelFormat dstFormat, SDL_Colourspace dstColourspace, SDL_PropertiesID dstProperties, void* dst, int dstPitch}, aliases: [q{SDL_ConvertPixelsAndColourspace}]},
 		{q{bool}, q{SDL_PremultiplyAlpha}, q{int width, int height, SDL_PixelFormat srcFormat, const(void)* src, int srcPitch, SDL_PixelFormat dstFormat, void* dst, int dstPitch, bool linear}},
 		{q{bool}, q{SDL_PremultiplySurfaceAlpha}, q{SDL_Surface* surface, bool linear}},
 		{q{bool}, q{SDL_ClearSurface}, q{SDL_Surface* surface, float r, float g, float b, float a}},

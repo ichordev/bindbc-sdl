@@ -25,7 +25,7 @@ mixin(joinFnBinds((){
 		{q{bool}, q{SDL_ClearClipboardData}, q{}},
 		{q{void*}, q{SDL_GetClipboardData}, q{const(char)* mimeType, size_t* size}},
 		{q{bool}, q{SDL_HasClipboardData}, q{const(char)* mimeType}},
-		{q{char**}, q{SDL_GetClipboardMimeTypes}, q{size_t* numMIMETypes}},
+		{q{char**}, q{SDL_GetClipboardMimeTypes}, q{size_t* numMIMETypes}, aliases: [q{SDL_GetClipboardMIMETypes}]},
 	];
 	return ret;
 }()));

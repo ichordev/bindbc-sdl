@@ -11,7 +11,8 @@ import bindbc.sdl.config, bindbc.sdl.codegen;
 import sdl.pixels;
 import sdl.properties;
 import sdl.rect: SDL_Rect, SDL_Point;
-import sdl.surface;
+import sdl.stdinc: SDL_FunctionPointer;
+import sdl.surface: SDL_Surface;
 
 alias SDL_DisplayID = uint;
 
@@ -96,7 +97,7 @@ enum SDL_WINDOWPOS_UNDEFINED_MASK = 0x1FFF_0000U;
 enum SDL_WINDOWPOS_UNDEFINED = SDL_WINDOWPOS_UNDEFINED_DISPLAY(0);
 pragma(inline,true) extern(C) nothrow @nogc pure @safe{
 	int SDL_WINDOWPOS_UNDEFINED_DISPLAY(int x) => SDL_WINDOWPOS_UNDEFINED_MASK | x;
-	bool SDL_WINDOWPOS_ISUNDEFINED(x) => (x & 0xFFFF_0000) == SDL_WINDOWPOS_UNDEFINED_MASK;
+	bool SDL_WINDOWPOS_ISUNDEFINED(int x) => (x & 0xFFFF_0000) == SDL_WINDOWPOS_UNDEFINED_MASK;
 }
 
 enum SDL_WINDOWPOS_CENTRED_MASK = 0x2FFF_0000U;
@@ -176,7 +177,7 @@ mixin(makeEnumBind(q{SDL_GLProfile}, aliases: [q{SDL_GLContextProfile}, q{SDL_GL
 	return ret;
 }()));
 
-mixin(makeEnumBind(q{SDL_GLContextFlag}, aliases: [q{SDL_GLContext}, q{SDL_GLcontextFlag}], members: (){
+mixin(makeEnumBind(q{SDL_GLContextFlag}, aliases: [q{SDL_GLcontextFlag}], members: (){
 	EnumMember[] ret = [
 		{{q{debugFlag},                q{SDL_GL_CONTEXT_DEBUG_FLAG}},                 q{0x0001}},
 		{{q{forwardCompatibleFlag},    q{SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG}},    q{0x0002}},
@@ -285,7 +286,7 @@ enum{
 	SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE = -1,
 }
 
-mixin(makeEnumBind(q{SDL_HitTestResult}, aliases: [q{SDL_HitTest}], members: (){
+mixin(makeEnumBind(q{SDL_HitTestResult}, members: (){
 	EnumMember[] ret = [
 		{{q{normal},             q{SDL_HITTEST_NORMAL}}},
 		{{q{draggable},          q{SDL_HITTEST_DRAGGABLE}}},
@@ -378,7 +379,7 @@ mixin(joinFnBinds((){
 		{q{bool}, q{SDL_SetWindowMouseGrab}, q{SDL_Window* window, bool grabbed}},
 		{q{bool}, q{SDL_GetWindowKeyboardGrab}, q{SDL_Window* window}},
 		{q{bool}, q{SDL_GetWindowMouseGrab}, q{SDL_Window* window}},
-		{q{SDL_Window*}, q{SDL_GetGrabbedWindow}, q{void}},
+		{q{SDL_Window*}, q{SDL_GetGrabbedWindow}, q{}},
 		{q{bool}, q{SDL_SetWindowMouseRect}, q{SDL_Window* window, const(SDL_Rect)* rect}},
 		{q{const(SDL_Rect)*}, q{SDL_GetWindowMouseRect}, q{SDL_Window* window}},
 		{q{bool}, q{SDL_SetWindowOpacity}, q{SDL_Window* window, float opacity}},

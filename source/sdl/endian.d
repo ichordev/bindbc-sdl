@@ -104,7 +104,7 @@ pragma(inline,true) extern(C) nothrow @nogc pure @safe{
 		}else{
 			uint lo = cast(uint)( x        & 0xFFFFFFFF);
 			uint hi = cast(uint)((x >> 32) & 0xFFFFFFFF);
-			return (SDL_Swap32(lo) << 32) | SDL_Swap32(hi);
+			return (cast(c_uint64)SDL_Swap32(lo) << 32) | SDL_Swap32(hi);
 		}
 	}
 	float SDL_SwapFloat(float x){

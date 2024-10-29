@@ -8,12 +8,12 @@ module sdl.render;
 
 import bindbc.sdl.config, bindbc.sdl.codegen;
 
-import sdl.blendmode: SDL_BlendMode;
+import sdl.blendmode: SDL_BlendMode_;
 import sdl.events: SDL_Event;
-import sdl.pixels: SDL_FColour;
+import sdl.pixels: SDL_FColour, SDL_PixelFormat;
 import sdl.properties: SDL_PropertiesID;
-import sdl.rect: SDL_FPoint;
-import sdl.surface: SDL_Surface;
+import sdl.rect: SDL_FRect, SDL_FPoint, SDL_Rect;
+import sdl.surface: SDL_FlipMode, SDL_ScaleMode, SDL_Surface;
 import sdl.video: SDL_Window, SDL_WindowFlags_;
 
 enum SDL_SOFTWARE_RENDERER = "software";
@@ -188,8 +188,8 @@ mixin(joinFnBinds((){
 		{q{bool}, q{SDL_SetTextureAlphaModFloat}, q{SDL_Texture* texture, float alpha}},
 		{q{bool}, q{SDL_GetTextureAlphaMod}, q{SDL_Texture* texture, ubyte* alpha}},
 		{q{bool}, q{SDL_GetTextureAlphaModFloat}, q{SDL_Texture* texture, float* alpha}},
-		{q{bool}, q{SDL_SetTextureBlendMode}, q{SDL_Texture* texture, SDL_BlendMode blendMode}},
-		{q{bool}, q{SDL_GetTextureBlendMode}, q{SDL_Texture* texture, SDL_BlendMode* blendMode}},
+		{q{bool}, q{SDL_SetTextureBlendMode}, q{SDL_Texture* texture, SDL_BlendMode_ blendMode}},
+		{q{bool}, q{SDL_GetTextureBlendMode}, q{SDL_Texture* texture, SDL_BlendMode_* blendMode}},
 		{q{bool}, q{SDL_SetTextureScaleMode}, q{SDL_Texture* texture, SDL_ScaleMode scaleMode}},
 		{q{bool}, q{SDL_GetTextureScaleMode}, q{SDL_Texture* texture, SDL_ScaleMode* scaleMode}},
 		{q{bool}, q{SDL_UpdateTexture}, q{SDL_Texture* texture, const(SDL_Rect)* rect, const(void)* pixels, int pitch}},
@@ -221,8 +221,8 @@ mixin(joinFnBinds((){
 		{q{bool}, q{SDL_GetRenderDrawColorFloat}, q{SDL_Renderer* renderer, float* r, float* g, float* b, float* a}, aliases: [q{SDL_GetRenderDrawColourFloat}]},
 		{q{bool}, q{SDL_SetRenderColorScale}, q{SDL_Renderer* renderer, float scale}, aliases: [q{SDL_SetRenderColourScale}]},
 		{q{bool}, q{SDL_GetRenderColorScale}, q{SDL_Renderer* renderer, float* scale}, aliases: [q{SDL_GetRenderColourScale}]},
-		{q{bool}, q{SDL_SetRenderDrawBlendMode}, q{SDL_Renderer* renderer, SDL_BlendMode blendMode}},
-		{q{bool}, q{SDL_GetRenderDrawBlendMode}, q{SDL_Renderer* renderer, SDL_BlendMode* blendMode}},
+		{q{bool}, q{SDL_SetRenderDrawBlendMode}, q{SDL_Renderer* renderer, SDL_BlendMode_ blendMode}},
+		{q{bool}, q{SDL_GetRenderDrawBlendMode}, q{SDL_Renderer* renderer, SDL_BlendMode_* blendMode}},
 		{q{bool}, q{SDL_RenderClear}, q{SDL_Renderer* renderer}},
 		{q{bool}, q{SDL_RenderPoint}, q{SDL_Renderer* renderer, float x, float y}},
 		{q{bool}, q{SDL_RenderPoints}, q{SDL_Renderer* renderer, const(SDL_FPoint)* points, int count}},
