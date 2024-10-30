@@ -327,14 +327,22 @@ EXPLAIN:
 - `SDL_Gesture` enables sdl.gesture!
 
 
-## SDL_main.h
+## Entry points
 It is recommended that you read this first: [README-main-functions.md](https://github.com/libsdl-org/SDL/blob/main/docs/README-main-functions.md)
 
-In BindBC-SDL, `sdl.main` is imported by default. However, does **NOT** mean that SDL will replace your main function by default.
+For convenience, `sdl.main` (equivalent to `SDL_main.h`) is imported by default. However, in BindBC-SDL having your entry point replaced by `sdl.main` is opt-*in* rather than opt-*out*. See more information below.
 
-If you want SDL to replace your main function, you will have to wrap your main function's parameters names & body in a mixin of `makeSDLMain`:
+### Replacing the main entry point
+If you want SDL to replace your entry point, you will have to wrap your main function's parameter names & body in a mixin of `makeSDLMain`. Doing so is the equivalent of using `#include <SDL3/SDL_main.h>` in C *without* defining `SDL_MAIN_NOIMPL`.
 ```d
-mixin(makeSDLMain(q{argC}, q{argV}, q{
+enum dynLoadSDL = q{
+	if(!loadSDL()){
+		import core.stdc.stdio, bindbc.loader;
+		foreach(error; bindbc.loader.errors){
+			printf("%s\n", error.message);
+		}
+	}};
+mixin(makeSDLMain(q{argC}, q{argV}, dynLoadSDL, dynLoadSDL~q{
 	import core.stdc.stdio;
 	foreach(argument; argV[0..argC]){
 		printf("%s\n", argument);
@@ -342,17 +350,28 @@ mixin(makeSDLMain(q{argC}, q{argV}, q{
 	return 0;
 }));
 ```
-Using `makeSDLMain` like this is equivalent to using `#include <SDL3/SDL_main.h>` in C.
+> [!IMPORTANT]\
+> `makeSDLMain`'s third argument (`dynLoad`) specifies what code to load SDL (and handle loading errors) when using the dynamic bindings. It can be left blank as long as you ONLY use the static bindings. This code will be prepended to your main function in cases where SDL does not override it.
 
-> [!NOTE]\
+> [!WARNING]\
 > When using this feature, your provided main function will always be `extern(C) nothrow`, take `(int, char**)` as its parameters, and must return `int`. Having an `extern(C)` main means that you need to handle some tasks (e.g. runtime initialisation & termination) that are normally taken care of for you by D's runtime.
 > See the [`extern(C)` main spec](https://dlang.org/spec/function.html#betterc-main).
 
-If you want to use the callback functions, then you also need to use version identifier `SDL_MainUseCallbacks`, and anything passed to the parameters of `makeSDLMain` will be ignored. Here's an example that initialises & terminates DRuntime, and has basic exception handling.
+
+### Callback entry points
+If you want to use the callback entry points (or 'main callbacks'), then you also need to use version identifier `SDL_MainUseCallbacks`. When using callback functions, only the `dynLoad` parameter of `makeSDLMain` is used. As a side-effect, this means that you can safely write code in your main body that depends on `SDL_MainUseCallbacks` not being in-use.
+
+Here's an example that initialises & terminates DRuntime, and has basic exception handling.
 ```
 import core.runtime, core.stdc.stdio;
 
-mixin(makeSDLMain()); //makeSDLMain's parameters are optional
+mixin(makeSDLMain(dynLoad: q{
+	if(!loadSDL()){
+		import core.stdc.stdio, bindbc.loader;
+		foreach(error; bindbc.loader.errors){
+			printf("%s\n", error.message);
+		}
+	}})); //makeSDLMain's parameters are optional
 
 version SDL_MainUseCallbacks{
 	extern(C) SDL_AppResult SDL_AppInit(void** state, int argC, char** argV) nothrow{

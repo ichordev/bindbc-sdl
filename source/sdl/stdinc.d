@@ -19,7 +19,7 @@ uint SDL_FOURCC(uint a, uint b, uint c, uint d) nothrow @nogc pure @safe =>
 	(cast(ubyte)c << 16) |
 	(cast(ubyte)d << 24);
 
-alias SDL_Time = c_int64;
+alias SDL_Time = long;
 
 private struct SDL_alignment_test{
 	ubyte a;
@@ -222,13 +222,13 @@ mixin(joinFnBinds((){
 		{q{int}, q{SDL_vswprintf}, q{wchar_t* text, size_t maxLen, const(wchar_t)* fmt, va_list ap}},
 		{q{int}, q{SDL_asprintf}, q{char** strP, const(char)* fmt, ...}},
 		{q{int}, q{SDL_vasprintf}, q{char** strP, const(char)* fmt, va_list ap}},
-		{q{void}, q{SDL_srand}, q{c_uint64 seed}},
+		{q{void}, q{SDL_srand}, q{ulong seed}},
 		{q{int}, q{SDL_rand}, q{int n}},
 		{q{float}, q{SDL_randf}, q{}},
 		{q{uint}, q{SDL_rand_bits}, q{}},
-		{q{int}, q{SDL_rand_r}, q{c_uint64* state, int n}},
-		{q{float}, q{SDL_randf_r}, q{c_uint64* state}},
-		{q{uint}, q{SDL_rand_bits_r}, q{c_uint64* state}},
+		{q{int}, q{SDL_rand_r}, q{ulong* state, int n}},
+		{q{float}, q{SDL_randf_r}, q{ulong* state}},
+		{q{uint}, q{SDL_rand_bits_r}, q{ulong* state}},
 		{q{double}, q{SDL_acos}, q{double x}},
 		{q{float}, q{SDL_acosf}, q{float x}},
 		{q{double}, q{SDL_asin}, q{double x}},

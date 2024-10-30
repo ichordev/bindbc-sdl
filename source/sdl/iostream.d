@@ -34,8 +34,8 @@ mixin(makeEnumBind(q{SDL_IOWhence}, aliases: [q{SDL_IOSeek}], members: (){
 struct SDL_IOStreamInterface{
 	uint version_;
 	private extern(C) nothrow{
-		alias SizeFn = c_int64 function(void* userData);
-		alias SeekFn = c_int64 function(void* userData, c_int64 offset, SDL_IOWhence whence);
+		alias SizeFn = long function(void* userData);
+		alias SeekFn = long function(void* userData, long offset, SDL_IOWhence whence);
 		alias ReadFn = size_t function(void* userData, void* ptr, size_t size, SDL_IOStatus* status);
 		alias WriteFn = size_t function(void* userData, const(void)* ptr, size_t size, SDL_IOStatus* status);
 		alias FlushFn = bool function(void* userData, SDL_IOStatus* status);
@@ -83,9 +83,9 @@ mixin(joinFnBinds((){
 		{q{bool}, q{SDL_CloseIO}, q{SDL_IOStream* context}},
 		{q{SDL_PropertiesID}, q{SDL_GetIOProperties}, q{SDL_IOStream* context}},
 		{q{SDL_IOStatus}, q{SDL_GetIOStatus}, q{SDL_IOStream* context}},
-		{q{c_int64}, q{SDL_GetIOSize}, q{SDL_IOStream* context}},
-		{q{c_int64}, q{SDL_SeekIO}, q{SDL_IOStream* context, c_int64 offset, SDL_IOWhence whence}},
-		{q{c_int64}, q{SDL_TellIO}, q{SDL_IOStream* context}},
+		{q{long}, q{SDL_GetIOSize}, q{SDL_IOStream* context}},
+		{q{long}, q{SDL_SeekIO}, q{SDL_IOStream* context, long offset, SDL_IOWhence whence}},
+		{q{long}, q{SDL_TellIO}, q{SDL_IOStream* context}},
 		{q{size_t}, q{SDL_ReadIO}, q{SDL_IOStream* context, void* ptr, size_t size}},
 		{q{size_t}, q{SDL_WriteIO}, q{SDL_IOStream* context, const(void)* ptr, size_t size}},
 		{q{size_t}, q{SDL_IOprintf}, q{SDL_IOStream* context, const(char)* fmt, ...}},
@@ -103,10 +103,10 @@ mixin(joinFnBinds((){
 		{q{bool}, q{SDL_ReadS32LE}, q{SDL_IOStream* src, int* value}},
 		{q{bool}, q{SDL_ReadU32BE}, q{SDL_IOStream* src, uint* value}},
 		{q{bool}, q{SDL_ReadS32BE}, q{SDL_IOStream* src, int* value}},
-		{q{bool}, q{SDL_ReadU64LE}, q{SDL_IOStream* src, c_uint64* value}},
-		{q{bool}, q{SDL_ReadS64LE}, q{SDL_IOStream* src, c_int64* value}},
-		{q{bool}, q{SDL_ReadU64BE}, q{SDL_IOStream* src, c_uint64* value}},
-		{q{bool}, q{SDL_ReadS64BE}, q{SDL_IOStream* src, c_int64* value}},
+		{q{bool}, q{SDL_ReadU64LE}, q{SDL_IOStream* src, ulong* value}},
+		{q{bool}, q{SDL_ReadS64LE}, q{SDL_IOStream* src, long* value}},
+		{q{bool}, q{SDL_ReadU64BE}, q{SDL_IOStream* src, ulong* value}},
+		{q{bool}, q{SDL_ReadS64BE}, q{SDL_IOStream* src, long* value}},
 		{q{bool}, q{SDL_WriteU8}, q{SDL_IOStream* dst, ubyte value}},
 		{q{bool}, q{SDL_WriteS8}, q{SDL_IOStream* dst, byte value}},
 		{q{bool}, q{SDL_WriteU16LE}, q{SDL_IOStream* dst, ushort value}},
@@ -117,10 +117,10 @@ mixin(joinFnBinds((){
 		{q{bool}, q{SDL_WriteS32LE}, q{SDL_IOStream* dst, int value}},
 		{q{bool}, q{SDL_WriteU32BE}, q{SDL_IOStream* dst, uint value}},
 		{q{bool}, q{SDL_WriteS32BE}, q{SDL_IOStream* dst, int value}},
-		{q{bool}, q{SDL_WriteU64LE}, q{SDL_IOStream* dst, c_uint64 value}},
-		{q{bool}, q{SDL_WriteS64LE}, q{SDL_IOStream* dst, c_int64 value}},
-		{q{bool}, q{SDL_WriteU64BE}, q{SDL_IOStream* dst, c_uint64 value}},
-		{q{bool}, q{SDL_WriteS64BE}, q{SDL_IOStream* dst, c_int64 value}},
+		{q{bool}, q{SDL_WriteU64LE}, q{SDL_IOStream* dst, ulong value}},
+		{q{bool}, q{SDL_WriteS64LE}, q{SDL_IOStream* dst, long value}},
+		{q{bool}, q{SDL_WriteU64BE}, q{SDL_IOStream* dst, ulong value}},
+		{q{bool}, q{SDL_WriteS64BE}, q{SDL_IOStream* dst, long value}},
 	];
 	return ret;
 }()));

@@ -92,8 +92,8 @@ mixin(joinFnBinds((){
 		ret ~= add;
 	}}else version(linux){{
 		FnBind[] add = [
-			{q{bool}, q{SDL_SetLinuxThreadPriority}, q{c_int64 threadID, int priority}},
-			{q{bool}, q{SDL_SetLinuxThreadPriorityAndPolicy}, q{c_int64 threadID, int sdlPriority, int schedPolicy}},
+			{q{bool}, q{SDL_SetLinuxThreadPriority}, q{long threadID, int priority}},
+			{q{bool}, q{SDL_SetLinuxThreadPriorityAndPolicy}, q{long threadID, int sdlPriority, int schedPolicy}},
 		];
 		ret ~= add;
 	}}else version(iOS){{

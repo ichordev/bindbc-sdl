@@ -142,13 +142,13 @@ mixin(makeEnumBind(q{SDL_EventType}, q{uint}, members: (){
 struct SDL_CommonEvent{
 	uint type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 }
 
 struct SDL_DisplayEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_DisplayID displayID;
 	int data1, data2;
 }
@@ -156,7 +156,7 @@ struct SDL_DisplayEvent{
 struct SDL_WindowEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	int data1, data2;
 }
@@ -164,14 +164,14 @@ struct SDL_WindowEvent{
 struct SDL_KeyboardDeviceEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_KeyboardID which;
 }
 
 struct SDL_KeyboardEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	SDL_KeyboardID which;
 	SDL_Scancode scancode;
@@ -184,7 +184,7 @@ struct SDL_KeyboardEvent{
 struct SDL_TextEditingEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	const(char)* text;
 	int start, length;
@@ -193,7 +193,7 @@ struct SDL_TextEditingEvent{
 struct SDL_TextEditingCandidatesEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	const(char*)* candidates;
 	int numCandidates, selectedCandidate;
@@ -209,7 +209,7 @@ struct SDL_TextEditingCandidatesEvent{
 struct SDL_TextInputEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	const(char)* text;
 }
@@ -217,14 +217,14 @@ struct SDL_TextInputEvent{
 struct SDL_MouseDeviceEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_MouseID which;
 }
 
 struct SDL_MouseMotionEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	SDL_MouseID which;
 	SDL_MouseButtonFlags state;
@@ -238,7 +238,7 @@ struct SDL_MouseMotionEvent{
 struct SDL_MouseButtonEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	SDL_MouseID which;
 	SDL_MouseButton button;
@@ -251,7 +251,7 @@ struct SDL_MouseButtonEvent{
 struct SDL_MouseWheelEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	SDL_MouseID which;
 	float x, y;
@@ -265,7 +265,7 @@ struct SDL_MouseWheelEvent{
 struct SDL_JoyAxisEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_JoystickID which;
 	ubyte axis;
 	ubyte padding1;
@@ -278,7 +278,7 @@ struct SDL_JoyAxisEvent{
 struct SDL_JoyBallEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_JoystickID which;
 	ubyte ball;
 	ubyte padding1;
@@ -293,7 +293,7 @@ struct SDL_JoyBallEvent{
 struct SDL_JoyHatEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_JoystickID which;
 	SDL_Hat hat;
 	ubyte value;
@@ -304,7 +304,7 @@ struct SDL_JoyHatEvent{
 struct SDL_JoyButtonEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_JoystickID which;
 	ubyte button;
 	bool down;
@@ -315,14 +315,14 @@ struct SDL_JoyButtonEvent{
 struct SDL_JoyDeviceEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_JoystickID which;
 }
 
 struct SDL_JoyBatteryEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_JoystickID which;
 	SDL_PowerState state;
 	int percent;
@@ -331,7 +331,7 @@ struct SDL_JoyBatteryEvent{
 struct SDL_GamepadAxisEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_JoystickID which;
 	ubyte axis;
 	ubyte padding1;
@@ -344,7 +344,7 @@ struct SDL_GamepadAxisEvent{
 struct SDL_GamepadButtonEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_JoystickID which;
 	ubyte button;
 	bool down;
@@ -355,14 +355,14 @@ struct SDL_GamepadButtonEvent{
 struct SDL_GamepadDeviceEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_JoystickID which;
 }
 
 struct SDL_GamepadTouchpadEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_JoystickID which;
 	int touchpad;
 	int finger;
@@ -373,11 +373,11 @@ struct SDL_GamepadTouchpadEvent{
 struct SDL_GamepadSensorEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_JoystickID which;
 	int sensor;
 	float[3] data;
-	c_uint64 sensorTimestamp;
+	ulong sensorTimestamp;
 	
 	alias sensor_timestamp = sensorTimestamp;
 }
@@ -385,7 +385,7 @@ struct SDL_GamepadSensorEvent{
 struct SDL_AudioDeviceEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_AudioDeviceID which;
 	bool recording;
 	ubyte padding1;
@@ -396,14 +396,14 @@ struct SDL_AudioDeviceEvent{
 struct SDL_CameraDeviceEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_CameraID which;
 }
 
 struct SDL_TouchFingerEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_TouchID touchID;
 	SDL_FingerID fingerID;
 	float x, y, dx, dy;
@@ -414,7 +414,7 @@ struct SDL_TouchFingerEvent{
 struct SDL_PenProximityEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	SDL_PenID which;
 }
@@ -422,7 +422,7 @@ struct SDL_PenProximityEvent{
 struct SDL_PenMotionEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	SDL_PenID which;
 	SDL_PenInputFlags_ penState;
@@ -434,7 +434,7 @@ struct SDL_PenMotionEvent{
 struct SDL_PenTouchEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	SDL_PenID which;
 	SDL_PenInputFlags_ penState;
@@ -447,7 +447,7 @@ struct SDL_PenTouchEvent{
 struct SDL_PenButtonEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	SDL_PenID which;
 	SDL_PenInputFlags_ penState;
@@ -461,7 +461,7 @@ struct SDL_PenButtonEvent{
 struct SDL_PenAxisEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	SDL_PenID which;
 	SDL_PenInputFlags_ penState;
@@ -475,7 +475,7 @@ struct SDL_PenAxisEvent{
 struct SDL_DropEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	float x, y;
 	const(char)* source, data;
@@ -484,16 +484,16 @@ struct SDL_DropEvent{
 struct SDL_ClipboardEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 }
 
 struct SDL_SensorEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_SensorID which;
 	float[6] data;
-	c_uint64 sensorTimestamp;
+	ulong sensorTimestamp;
 	
 	alias sensor_timestamp = sensorTimestamp;
 }
@@ -501,13 +501,13 @@ struct SDL_SensorEvent{
 struct SDL_QuitEvent{
 	SDL_EventType type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 }
 
 struct SDL_UserEvent{
 	uint type;
 	uint reserved;
-	c_uint64 timestamp;
+	ulong timestamp;
 	SDL_WindowID windowID;
 	int code;
 	void* data1, data2;

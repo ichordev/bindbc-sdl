@@ -92,7 +92,10 @@ alias nsToUS = SDL_NS_TO_US;
 static if(dStyleEnums){
 	//————— prefix-less camelCased macro aliases —————
 	//sdl.pixels
-	
+	alias alphaOpaque = SDL_ALPHA_OPAQUE;
+	alias alphaOpaqueFloat = SDL_ALPHA_OPAQUE_FLOAT;
+	alias alphaTransparent = SDL_ALPHA_TRANSPARENT;
+	alias alphaTransparentFloat = SDL_ALPHA_TRANSPARENT_FLOAT;
 	//sdl.sensor
 	alias standardGravity = SDL_STANDARD_GRAVITY;
 	//sdl.timer

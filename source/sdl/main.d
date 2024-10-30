@@ -52,7 +52,10 @@ version(SDL_MainUseCallbacks){
 	else version(MainAvailable) version = SDLEntryPoint;
 }
 
-enum makeSDLMain = (string argCountIden=null, string argArrayIden=null, string body=null){
+enum makeSDLMain = (string argCountIden=null, string argArrayIden=null, string dynLoad=null, string body=null){
+	static if(staticBinding)
+		dynLoad = "";
+	
 	string sdlMain, userMain;
 	
 	version(SDL_MainUseCallbacks){
@@ -97,8 +100,9 @@ alias PWSTR = wchar_t*;
 				}else{
 					sdlMain ~= q{extern(C) int main(int argC, char* argV)};
 				}
-				sdlMain ~= q{ => SDL_RunApp(0, null, &SDL_main, null);} ~ '\n';
-				
+				sdlMain ~= '{'~dynLoad~q{
+	return SDL_RunApp(0, null, &SDL_main, null);
+} ~ "}\n";
 			}
 			
 			version(SDL_MainUnicode){
@@ -106,10 +110,14 @@ alias PWSTR = wchar_t*;
 			}else{
 				sdlMain ~= q{extern(System) int WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int sw)};
 			}
-			sdlMain ~= q{ =>  SDL_RunApp(0, null, &SDL_main, null);};
+			sdlMain ~= '{'~dynLoad~q{
+	return SDL_RunApp(0, null, &SDL_main, null);
+} ~ '}';
 			
 		}else{
-			sdlMain ~= q{extern(C) int main(int argC, char** argV) => SDL_RunApp(argC, argV, &SDL_main, null);};
+			sdlMain ~= q{extern(C) int main(int argC, char** argV)}~'{'~dynLoad~q{
+	return SDL_RunApp(argC, argV, &SDL_main, null);
+} ~ '}';
 		}
 	}
 	return userMain ~ sdlMain;

@@ -178,7 +178,7 @@ mixin(joinFnBinds((){
 		{q{bool}, q{SDL_SetJoystickVirtualButton}, q{SDL_Joystick* joystick, int button, bool down}},
 		{q{bool}, q{SDL_SetJoystickVirtualHat}, q{SDL_Joystick* joystick, int hat, SDL_Hat_ value}},
 		{q{bool}, q{SDL_SetJoystickVirtualTouchpad}, q{SDL_Joystick* joystick, int touchpad, int finger, bool down, float x, float y, float pressure}},
-		{q{bool}, q{SDL_SendJoystickVirtualSensorData}, q{SDL_Joystick* joystick, SDL_SensorType type, c_uint64 sensorTimestamp, const(float)* data, int numValues}},
+		{q{bool}, q{SDL_SendJoystickVirtualSensorData}, q{SDL_Joystick* joystick, SDL_SensorType type, ulong sensorTimestamp, const(float)* data, int numValues}},
 		{q{SDL_PropertiesID}, q{SDL_GetJoystickProperties}, q{SDL_Joystick* joystick}},
 		{q{const(char)*}, q{SDL_GetJoystickName}, q{SDL_Joystick* joystick}},
 		{q{const(char)*}, q{SDL_GetJoystickPath}, q{SDL_Joystick* joystick}},

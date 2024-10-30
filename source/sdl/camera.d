@@ -52,7 +52,7 @@ mixin(joinFnBinds((){
 		{q{SDL_CameraID}, q{SDL_GetCameraID}, q{SDL_Camera* camera}},
 		{q{SDL_PropertiesID}, q{SDL_GetCameraProperties}, q{SDL_Camera* camera}},
 		{q{bool}, q{SDL_GetCameraFormat}, q{SDL_Camera* camera, SDL_CameraSpec* spec}},
-		{q{SDL_Surface*}, q{SDL_AcquireCameraFrame}, q{SDL_Camera* camera, c_uint64* timestampNS}},
+		{q{SDL_Surface*}, q{SDL_AcquireCameraFrame}, q{SDL_Camera* camera, ulong* timestampNS}},
 		{q{void}, q{SDL_ReleaseCameraFrame}, q{SDL_Camera* camera, SDL_Surface* frame}},
 		{q{void}, q{SDL_CloseCamera}, q{SDL_Camera* camera}},
 	];

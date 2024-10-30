@@ -10,8 +10,8 @@ import bindbc.sdl.config, bindbc.sdl.codegen;
 
 import sdl.mouse;
 
-alias SDL_TouchID = c_uint64;
-alias SDL_FingerID = c_uint64;
+alias SDL_TouchID = ulong;
+alias SDL_FingerID = ulong;
 
 mixin(makeEnumBind(q{SDL_TouchDeviceType}, aliases: [q{SDL_TouchDevice}], members: (){
 	EnumMember[] ret = [

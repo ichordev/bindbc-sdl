@@ -188,7 +188,7 @@ mixin(joinFnBinds((){
 		{q{ushort}, q{SDL_GetGamepadProductVersion}, q{SDL_Gamepad* gamepad}},
 		{q{ushort}, q{SDL_GetGamepadFirmwareVersion}, q{SDL_Gamepad* gamepad}},
 		{q{const(char)*}, q{SDL_GetGamepadSerial}, q{SDL_Gamepad* gamepad}},
-		{q{c_uint64}, q{SDL_GetGamepadSteamHandle}, q{SDL_Gamepad* gamepad}},
+		{q{ulong}, q{SDL_GetGamepadSteamHandle}, q{SDL_Gamepad* gamepad}},
 		{q{SDL_JoystickConnectionState}, q{SDL_GetGamepadConnectionState}, q{SDL_Gamepad* gamepad}},
 		{q{SDL_PowerState}, q{SDL_GetGamepadPowerInfo}, q{SDL_Gamepad* gamepad, int* percent}},
 		{q{bool}, q{SDL_GamepadConnected}, q{SDL_Gamepad* gamepad}},

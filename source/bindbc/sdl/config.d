@@ -7,7 +7,7 @@
 +/
 module bindbc.sdl.config;
 
-public import bindbc.common.types: c_long, c_ulong, c_longlong, c_ulonglong, c_int64, c_uint64, va_list, wchar_t;
+public import bindbc.common.types: c_long, c_ulong, c_longlong, c_ulonglong, va_list, wchar_t;
 public import bindbc.common.versions: Version;
 
 enum staticBinding = (){
