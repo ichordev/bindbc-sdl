@@ -61,7 +61,7 @@ mixin(makeEnumBind(q{SDL_DisplayOrientation}, aliases: [q{SDL_Orientation}], mem
 
 struct SDL_Window;
 
-alias SDL_WindowFlags_ = c_uint64;
+alias SDL_WindowFlags_ = ulong;
 mixin(makeEnumBind(q{SDL_WindowFlags}, q{SDL_WindowFlags_}, members: (){
 	EnumMember[] ret = [
 		{{q{fullscreen},           q{SDL_WINDOW_FULLSCREEN}},             q{0x0000_0000_0000_0001UL}},

@@ -29,19 +29,19 @@ alias SDL_TimerID = uint;
 
 extern(C) nothrow{
 	alias SDL_TimerCallback = uint function(void* userData, SDL_TimerID timerID, uint interval);
-	alias SDL_NSTimerCallback = c_uint64 function(void* userData, SDL_TimerID timerID, c_uint64 interval);
+	alias SDL_NSTimerCallback = ulong function(void* userData, SDL_TimerID timerID, ulong interval);
 }
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{c_uint64}, q{SDL_GetTicks}, q{}},
-		{q{c_uint64}, q{SDL_GetTicksNS}, q{}},
-		{q{c_uint64}, q{SDL_GetPerformanceCounter}, q{}},
-		{q{c_uint64}, q{SDL_GetPerformanceFrequency}, q{}},
+		{q{ulong}, q{SDL_GetTicks}, q{}},
+		{q{ulong}, q{SDL_GetTicksNS}, q{}},
+		{q{ulong}, q{SDL_GetPerformanceCounter}, q{}},
+		{q{ulong}, q{SDL_GetPerformanceFrequency}, q{}},
 		{q{void}, q{SDL_Delay}, q{uint ms}},
-		{q{void}, q{SDL_DelayNS}, q{c_uint64 ns}},
+		{q{void}, q{SDL_DelayNS}, q{ulong ns}},
 		{q{SDL_TimerID}, q{SDL_AddTimer}, q{uint interval, SDL_TimerCallback callback, void* userData}},
-		{q{SDL_TimerID}, q{SDL_AddTimerNS}, q{c_uint64 interval, SDL_NSTimerCallback callback, void* userData}},
+		{q{SDL_TimerID}, q{SDL_AddTimerNS}, q{ulong interval, SDL_NSTimerCallback callback, void* userData}},
 		{q{bool}, q{SDL_RemoveTimer}, q{SDL_TimerID id}},
 	];
 	return ret;

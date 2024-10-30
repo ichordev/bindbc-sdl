@@ -40,7 +40,7 @@ mixin(makeEnumBind(q{SDL_PathType}, members: (){
 
 struct SDL_PathInfo{
 	SDL_PathType type;
-	c_uint64 size;
+	ulong size;
 	SDL_Time createTime;
 	SDL_Time modifyTime;
 	SDL_Time accessTime;

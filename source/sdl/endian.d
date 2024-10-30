@@ -76,7 +76,7 @@ pragma(inline,true) extern(C) nothrow @nogc pure @safe{
 			return (x << 24) | ((x << 8) & 0x00FF0000) | ((x >> 8) & 0x0000FF00) | (x >> 24);
 		}
 	}
-	c_uint64 SDL_Swap64(c_uint64 x){
+	ulong SDL_Swap64(ulong x){
 		version(ExtInlineAsm_X86){
 			union V{
 				struct S{ uint a, b; }
@@ -104,7 +104,7 @@ pragma(inline,true) extern(C) nothrow @nogc pure @safe{
 		}else{
 			uint lo = cast(uint)( x        & 0xFFFFFFFF);
 			uint hi = cast(uint)((x >> 32) & 0xFFFFFFFF);
-			return (cast(c_uint64)SDL_Swap32(lo) << 32) | SDL_Swap32(hi);
+			return (cast(ulong)SDL_Swap32(lo) << 32) | SDL_Swap32(hi);
 		}
 	}
 	float SDL_SwapFloat(float x){

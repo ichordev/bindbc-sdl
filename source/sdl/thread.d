@@ -18,7 +18,7 @@ else version(Cygwin) version = Microsoft;
 
 struct SDL_Thread;
 
-alias SDL_ThreadID = c_uint64;
+alias SDL_ThreadID = ulong;
 
 alias SDL_TLSID = SDL_AtomicInt;
 

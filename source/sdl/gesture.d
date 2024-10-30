@@ -13,7 +13,7 @@ import sdl.iostream: SDL_IOStream;
 import sdl.rect: SDL_FPoint;
 import sdl.touch: SDL_TouchID;
 
-alias Gesture_ID = c_int64;
+alias Gesture_ID = long;
 
 enum{
 	GESTURE_DOLLARGESTURE = 0x800,
@@ -186,7 +186,7 @@ c_ulong gestureHashDollar(SDL_FPoint* points){
 }
 
 int gestureSaveTemplate(GestureDollarTemplate* templ, SDL_IOStream* dst){
-	const c_int64 bytes = (templ.path[0]).sizeof * GESTURE_DOLLARNPOINTS;
+	const long bytes = (templ.path[0]).sizeof * GESTURE_DOLLARNPOINTS;
 	
 	if(dst is null){
 		return 0;
@@ -295,7 +295,7 @@ public int Gesture_LoadDollarTemplates(SDL_TouchID touchID, SDL_IOStream* src){
 	
 	while(1){
 		GestureDollarTemplate templ;
-		const c_int64 bytes = (templ.path[0]).sizeof * GESTURE_DOLLARNPOINTS;
+		const long bytes = (templ.path[0]).sizeof * GESTURE_DOLLARNPOINTS;
 		
 		if(SDL_ReadIO(src, templ.path, bytes) < bytes){
 			if(loaded == 0){
