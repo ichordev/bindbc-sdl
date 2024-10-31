@@ -56,12 +56,15 @@ pragma(inline,true) extern(C) nothrow @nogc{
 		SDL_CreateThreadWithPropertiesRuntime(props, cast(SDL_FunctionPointer)SDL_BeginThreadFunction, cast(SDL_FunctionPointer)SDL_EndThreadFunction);
 }
 
-enum{
-	SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER    = "SDL.thread.create.entry_function",
-	SDL_PROP_THREAD_CREATE_NAME_STRING               = "SDL.thread.create.name",
-	SDL_PROP_THREAD_CREATE_USERDATA_POINTER          = "SDL.thread.create.userdata",
-	SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER          = "SDL.thread.create.stacksize",
-}
+mixin(makeEnumBind(q{SDLProp_ThreadCreate}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{entryFunctionPointer},    q{SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER}},    q{"SDL.thread.create.entry_function"}},
+		{{q{nameString},              q{SDL_PROP_THREAD_CREATE_NAME_STRING}},               q{"SDL.thread.create.name"}},
+		{{q{userDataPointer},         q{SDL_PROP_THREAD_CREATE_USERDATA_POINTER}},          q{"SDL.thread.create.userdata"}},
+		{{q{stackSizeNumber},         q{SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER}},          q{"SDL.thread.create.stacksize"}},
+	];
+	return ret;
+}()));
 
 alias SDL_TLSDestructorCallback = extern(C) void function(void* value) nothrow;
 

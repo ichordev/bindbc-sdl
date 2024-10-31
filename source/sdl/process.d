@@ -23,26 +23,32 @@ mixin(makeEnumBind(q{SDL_ProcessIO}, aliases: [q{SDL_ProcessStdIO}], members: ()
 	return ret;
 }()));
 
-enum{
-	SDL_PROP_PROCESS_CREATE_ARGS_POINTER                = "SDL.process.create.args",
-	SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER         = "SDL.process.create.environment",
-	SDL_PROP_PROCESS_CREATE_STDIN_NUMBER                = "SDL.process.create.stdin_option",
-	SDL_PROP_PROCESS_CREATE_STDIN_POINTER               = "SDL.process.create.stdin_source",
-	SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER               = "SDL.process.create.stdout_option",
-	SDL_PROP_PROCESS_CREATE_STDOUT_POINTER              = "SDL.process.create.stdout_source",
-	SDL_PROP_PROCESS_CREATE_STDERR_NUMBER               = "SDL.process.create.stderr_option",
-	SDL_PROP_PROCESS_CREATE_STDERR_POINTER              = "SDL.process.create.stderr_source",
-	SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN    = "SDL.process.create.stderr_to_stdout",
-	SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN          = "SDL.process.create.background",
-}
+mixin(makeEnumBind(q{SDLProp_ProcessCreate}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{argsPointer},              q{SDL_PROP_PROCESS_CREATE_ARGS_POINTER}},                q{"SDL.process.create.args"}},
+		{{q{environmentPointer},       q{SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER}},         q{"SDL.process.create.environment"}},
+		{{q{stdInNumber},              q{SDL_PROP_PROCESS_CREATE_STDIN_NUMBER}},                q{"SDL.process.create.stdin_option"}},
+		{{q{stdInPointer},             q{SDL_PROP_PROCESS_CREATE_STDIN_POINTER}},               q{"SDL.process.create.stdin_source"}},
+		{{q{stdOutNumber},             q{SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER}},               q{"SDL.process.create.stdout_option"}},
+		{{q{stdOutPointer},            q{SDL_PROP_PROCESS_CREATE_STDOUT_POINTER}},              q{"SDL.process.create.stdout_source"}},
+		{{q{stdErrNumber},             q{SDL_PROP_PROCESS_CREATE_STDERR_NUMBER}},               q{"SDL.process.create.stderr_option"}},
+		{{q{stdErrPointer},            q{SDL_PROP_PROCESS_CREATE_STDERR_POINTER}},              q{"SDL.process.create.stderr_source"}},
+		{{q{stdErrToStdOutBoolean},    q{SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN}},    q{"SDL.process.create.stderr_to_stdout"}},
+		{{q{backgroundBoolean},        q{SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN}},          q{"SDL.process.create.background"}},
+	];
+	return ret;
+}()));
 
-enum{
-	SDL_PROP_PROCESS_PID_NUMBER          = "SDL.process.pid",
-	SDL_PROP_PROCESS_STDIN_POINTER       = "SDL.process.stdin",
-	SDL_PROP_PROCESS_STDOUT_POINTER      = "SDL.process.stdout",
-	SDL_PROP_PROCESS_STDERR_POINTER      = "SDL.process.stderr",
-	SDL_PROP_PROCESS_BACKGROUND_BOOLEAN  = "SDL.process.background",
-}
+mixin(makeEnumBind(q{SDLProp_Process}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{pidNumber},            q{SDL_PROP_PROCESS_PID_NUMBER}},            q{"SDL.process.pid"}},
+		{{q{stdInPointer},         q{SDL_PROP_PROCESS_STDIN_POINTER}},         q{"SDL.process.stdin"}},
+		{{q{stdOutPointer},        q{SDL_PROP_PROCESS_STDOUT_POINTER}},        q{"SDL.process.stdout"}},
+		{{q{stdErrPointer},        q{SDL_PROP_PROCESS_STDERR_POINTER}},        q{"SDL.process.stderr"}},
+		{{q{backgroundBoolean},    q{SDL_PROP_PROCESS_BACKGROUND_BOOLEAN}},    q{"SDL.process.background"}},
+	];
+	return ret;
+}()));
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [

@@ -41,14 +41,16 @@ mixin(makeEnumBind(q{SDL_Capitalisation}, aliases: [q{SDL_Capitalise}, q{SDL_Cap
 	return ret;
 }()));
 
-enum{
-	SDL_PROP_TEXTINPUT_TYPE_NUMBER                 = "SDL.textinput.type",
-	SDL_PROP_TEXTINPUT_CAPITALISATION_NUMBER       = "SDL.textinput.capitalization",
-	SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER       = SDL_PROP_TEXTINPUT_CAPITALISATION_NUMBER,
-	SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN         = "SDL.textinput.autocorrect",
-	SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN           = "SDL.textinput.multiline",
-	SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER    = "SDL.textinput.android.inputtype",
-}
+mixin(makeEnumBind(q{SDLProp_TextInput}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{typeNumber},                q{SDL_PROP_TEXTINPUT_TYPE_NUMBER}},                 q{"SDL.textinput.type"}},
+		{{q{capitalisationNumber},      q{SDL_PROP_TEXTINPUT_CAPITALISATION_NUMBER}},       q{"SDL.textinput.capitalization"}, aliases: [{q{capitalizationNumber}, q{SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER}}]},
+		{{q{autocorrectBoolean},        q{SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN}},         q{"SDL.textinput.autocorrect"}},
+		{{q{multilineBoolean},          q{SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN}},           q{"SDL.textinput.multiline"}},
+		{{q{androidInputTypeNumber},    q{SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER}},    q{"SDL.textinput.android.inputtype"}},
+	];
+	return ret;
+}()));
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [

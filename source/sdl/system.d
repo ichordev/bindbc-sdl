@@ -30,14 +30,14 @@ version(iOS){
 }
 
 version(Android){
-	enum{
-		SDL_ANDROID_EXTERNAL_STORAGE_READ   = 0x01,
-		SDL_ANDROID_EXTERNAL_STORAGE_WRITE  = 0x02,
-	}
-	static if(dStyleEnums){
-		alias androidExternalStorageRead = SDL_ANDROID_EXTERNAL_STORAGE_READ;
-		alias androidExternalStorageWrite = SDL_ANDROID_EXTERNAL_STORAGE_WRITE;
-	}
+	alias SDL_AndroidExternalStorageState_ = uint;
+	mixin(makeEnumBind(q{SDL_AndroidExternalStorageState}, q{SDL_AndroidExternalStorageState_}, aliases: [q{SDL_AndroidExternalStorage}], members: (){
+		EnumMember[] ret = [
+				{{q{read},     q{SDL_ANDROID_EXTERNAL_STORAGE_READ}},     q{0x01}},
+				{{q{write},    q{SDL_ANDROID_EXTERNAL_STORAGE_WRITE}},    q{0x02}},
+			];
+		return ret;
+	}()));
 	
 	alias SDL_RequestAndroidPermissionCallback = extern(C) void function(void* userData, const(char)* permission, bool granted) nothrow;
 }
@@ -82,7 +82,7 @@ mixin(joinFnBinds((){
 			{q{bool}, q{SDL_IsDeXMode}, q{}},
 			{q{void}, q{SDL_SendAndroidBackButton}, q{}},
 			{q{const(char)*}, q{SDL_GetAndroidInternalStoragePath}, q{}},
-			{q{uint}, q{SDL_GetAndroidExternalStorageState}, q{}},
+			{q{SDL_AndroidExternalStorageState}, q{SDL_GetAndroidExternalStorageState}, q{}},
 			{q{const(char)*}, q{SDL_GetAndroidExternalStoragePath}, q{}},
 			{q{const(char)*}, q{SDL_GetAndroidCachePath}, q{}},
 			{q{bool}, q{SDL_RequestAndroidPermission}, q{const(char)* permission, SDL_RequestAndroidPermissionCallback cb, void* userData}},

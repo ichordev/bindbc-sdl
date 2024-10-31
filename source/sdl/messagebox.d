@@ -64,11 +64,10 @@ alias SDL_MessageBoxColorScheme = SDL_MessageBoxColourScheme;
 struct SDL_MessageBoxData{
 	SDL_MessageBoxFlags flags;
 	SDL_Window* window;
-	const(char)* title;
-	const(char)* message;
+	const(char)* title, message;
 	int numButtons;
 	const(SDL_MessageBoxButtonData)* buttons;
-	const(SDL_MessageBoxColorScheme)* colourScheme;
+	const(SDL_MessageBoxColourScheme)* colourScheme;
 	
 	alias numbuttons = numButtons;
 	alias colorScheme = colourScheme;

@@ -298,29 +298,10 @@ If you intend to compile for any of these platforms, please add the correspondin
 
 | Platform                       | Version identifier |
 |--------------------------------|--------------------|
-| Nintendo 3DS                   | `_3DS`             | //seen
-| DirectFB                       | `DirectFB`         |
-| Microsoft Game Development Kit | `GDK`              | //SEEN; for WinGDK & XBox
-| KMS/DRM                        | `KMSDRM`           |
-| Mir-server                     | `Mir`              |
-| Operating System/2             | `OS2`              |
-| Vivante                        | `Vivante`          |
-| Sony Vita                      | `Vita`             | //seen
-| Microsoft Game Development Kit | `WinGDK`           | // => replace with version(GDK) + version(Windows)
-| Windows Runtime                | `WinRT`            |
-//consider:
-| Sony PSP                       | `PSP`              | //seen
-| RISC OS                        | `RISCOS`           |
-HP-UX
-IRIX
-BSDi
-
-NOTE: SDL_PLATFORM_ANDROID overwrites SDL_PLATFORM_LINUX
-
-TODO:
-- go through all structs & inline some fields
-- create prefixless aliases in package
-- check if all Flags are pluralised
+| Nintendo 3DS                   | `_3DS`             |
+| Microsoft Game Development Kit | `GDK`              |
+| Sony Vita                      | `Vita`             |
+| Sony PSP                       | `PSP`              |
 
 EXPLAIN:
 - `SDL_MainUnicode` makes SDL's main use UCS-2 on applicable Microsoft platforms

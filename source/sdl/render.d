@@ -57,108 +57,121 @@ struct SDL_Texture{
 	alias refcount = refCount;
 }
 
-enum{
-	SDL_PROP_RENDERER_CREATE_NAME_STRING                                  = "SDL.renderer.create.name",
-	SDL_PROP_RENDERER_CREATE_WINDOW_POINTER                               = "SDL.renderer.create.window",
-	SDL_PROP_RENDERER_CREATE_SURFACE_POINTER                              = "SDL.renderer.create.surface",
-	SDL_PROP_RENDERER_CREATE_OUTPUT_COLOURSPACE_NUMBER                    = "SDL.renderer.create.output_colorspace",
-	SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER                     = SDL_PROP_RENDERER_CREATE_OUTPUT_COLOURSPACE_NUMBER,
-	SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER                         = "SDL.renderer.create.present_vsync",
-	SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER                      = "SDL.renderer.create.vulkan.instance",
-	SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER                        = "SDL.renderer.create.vulkan.surface",
-	SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER               = "SDL.renderer.create.vulkan.physical_device",
-	SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER                        = "SDL.renderer.create.vulkan.device",
-	SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER    = "SDL.renderer.create.vulkan.graphics_queue_family_index",
-	SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER     = "SDL.renderer.create.vulkan.present_queue_family_index",
-}
+mixin(makeEnumBind(q{SDLProp_RendererCreate}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{nameString},                              q{SDL_PROP_RENDERER_CREATE_NAME_STRING}},                                  q{"SDL.renderer.create.name"}},
+		{{q{windowPointer},                           q{SDL_PROP_RENDERER_CREATE_WINDOW_POINTER}},                               q{"SDL.renderer.create.window"}},
+		{{q{surfacePointer},                          q{SDL_PROP_RENDERER_CREATE_SURFACE_POINTER}},                              q{"SDL.renderer.create.surface"}},
+		{{q{outputColourspaceNumber},                 q{SDL_PROP_RENDERER_CREATE_OUTPUT_COLOURSPACE_NUMBER}},                    q{"SDL.renderer.create.output_colorspace"}, aliases: [{q{outputColorspaceNumber}, q{SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER}}]},
+		{{q{presentVSyncNumber},                      q{SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER}},                         q{"SDL.renderer.create.present_vsync"}},
+		{{q{vulkanInstancePointer},                   q{SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER}},                      q{"SDL.renderer.create.vulkan.instance"}},
+		{{q{vulkanSurfaceNumber},                     q{SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER}},                        q{"SDL.renderer.create.vulkan.surface"}},
+		{{q{vulkanPhysicalDevicePointer},             q{SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER}},               q{"SDL.renderer.create.vulkan.physical_device"}},
+		{{q{vulkanDevicePointer},                     q{SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER}},                        q{"SDL.renderer.create.vulkan.device"}},
+		{{q{vulkanGraphicsQueueFamilyIndexNumber},    q{SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER}},    q{"SDL.renderer.create.vulkan.graphics_queue_family_index"}},
+		{{q{vulkanPresentQueueFamilyIndexNumber},     q{SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER}},     q{"SDL.renderer.create.vulkan.present_queue_family_index"}},
+	];
+	return ret;
+}()));
 
-enum{
-	SDL_PROP_RENDERER_NAME_STRING                                  = "SDL.renderer.name",
-	SDL_PROP_RENDERER_WINDOW_POINTER                               = "SDL.renderer.window",
-	SDL_PROP_RENDERER_SURFACE_POINTER                              = "SDL.renderer.surface",
-	SDL_PROP_RENDERER_VSYNC_NUMBER                                 = "SDL.renderer.vsync",
-	SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER                      = "SDL.renderer.max_texture_size",
-	SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER                      = "SDL.renderer.texture_formats",
-	SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER                     = "SDL.renderer.output_colorspace",
-	SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN                          = "SDL.renderer.HDR_enabled",
-	SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT                        = "SDL.renderer.SDR_white_point",
-	SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT                           = "SDL.renderer.HDR_headroom",
-	SDL_PROP_RENDERER_D3D9_DEVICE_POINTER                          = "SDL.renderer.d3d9.device",
-	SDL_PROP_RENDERER_D3D11_DEVICE_POINTER                         = "SDL.renderer.d3d11.device",
-	SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER                      = "SDL.renderer.d3d11.swap_chain",
-	SDL_PROP_RENDERER_D3D12_DEVICE_POINTER                         = "SDL.renderer.d3d12.device",
-	SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER                      = "SDL.renderer.d3d12.swap_chain",
-	SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER                  = "SDL.renderer.d3d12.command_queue",
-	SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER                      = "SDL.renderer.vulkan.instance",
-	SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER                        = "SDL.renderer.vulkan.surface",
-	SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER               = "SDL.renderer.vulkan.physical_device",
-	SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER                        = "SDL.renderer.vulkan.device",
-	SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER    = "SDL.renderer.vulkan.graphics_queue_family_index",
-	SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER     = "SDL.renderer.vulkan.present_queue_family_index",
-	SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER          = "SDL.renderer.vulkan.swapchain_image_count",
-}
+mixin(makeEnumBind(q{SDLProp_Renderer}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{nameString},                              q{SDL_PROP_RENDERER_NAME_STRING}},                                  q{"SDL.renderer.name"}},
+		{{q{windowPointer},                           q{SDL_PROP_RENDERER_WINDOW_POINTER}},                               q{"SDL.renderer.window"}},
+		{{q{surfacePointer},                          q{SDL_PROP_RENDERER_SURFACE_POINTER}},                              q{"SDL.renderer.surface"}},
+		{{q{vsyncNumber},                             q{SDL_PROP_RENDERER_VSYNC_NUMBER}},                                 q{"SDL.renderer.vsync"}},
+		{{q{maxTextureSizeNumber},                    q{SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER}},                      q{"SDL.renderer.max_texture_size"}},
+		{{q{textureFormatsPointer},                   q{SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER}},                      q{"SDL.renderer.texture_formats"}},
+		{{q{outputColourspaceNumber},                 q{SDL_PROP_RENDERER_OUTPUT_COLOURSPACE_NUMBER}},                    q{"SDL.renderer.output_colorspace"}, aliases: [{q{outputColorspaceNumber}, q{SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER}}]},
+		{{q{hdrEnabledBoolean},                       q{SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN}},                          q{"SDL.renderer.HDR_enabled"}},
+		{{q{sdrWhitePointFloat},                      q{SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT}},                        q{"SDL.renderer.SDR_white_point"}},
+		{{q{hdrHeadroomFloat},                        q{SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT}},                           q{"SDL.renderer.HDR_headroom"}},
+		{{q{d3d9DevicePointer},                       q{SDL_PROP_RENDERER_D3D9_DEVICE_POINTER}},                          q{"SDL.renderer.d3d9.device"}},
+		{{q{d3d11DevicePointer},                      q{SDL_PROP_RENDERER_D3D11_DEVICE_POINTER}},                         q{"SDL.renderer.d3d11.device"}},
+		{{q{d3d11SwapchainPointer},                   q{SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER}},                      q{"SDL.renderer.d3d11.swap_chain"}},
+		{{q{d3d12DevicePointer},                      q{SDL_PROP_RENDERER_D3D12_DEVICE_POINTER}},                         q{"SDL.renderer.d3d12.device"}},
+		{{q{d3d12SwapchainPointer},                   q{SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER}},                      q{"SDL.renderer.d3d12.swap_chain"}},
+		{{q{d3d12CommandQueuePointer},                q{SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER}},                  q{"SDL.renderer.d3d12.command_queue"}},
+		{{q{vulkanInstancePointer},                   q{SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER}},                      q{"SDL.renderer.vulkan.instance"}},
+		{{q{vulkanSurfaceNumber},                     q{SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER}},                        q{"SDL.renderer.vulkan.surface"}},
+		{{q{vulkanPhysicalDevicePointer},             q{SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER}},               q{"SDL.renderer.vulkan.physical_device"}},
+		{{q{vulkanDevicePointer},                     q{SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER}},                        q{"SDL.renderer.vulkan.device"}},
+		{{q{vulkanGraphicsQueueFamilyIndexNumber},    q{SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER}},    q{"SDL.renderer.vulkan.graphics_queue_family_index"}},
+		{{q{vulkanPresentQueueFamilyIndexNumber},     q{SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER}},     q{"SDL.renderer.vulkan.present_queue_family_index"}},
+		{{q{vulkanSwapchainImageCountNumber},         q{SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER}},          q{"SDL.renderer.vulkan.swapchain_image_count"}},
+	];
+	return ret;
+}()));
 
-enum{
-	SDL_PROP_TEXTURE_CREATE_COLOURSPACE_NUMBER             = "SDL.texture.create.colorspace",
-	SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER              = SDL_PROP_TEXTURE_CREATE_COLOURSPACE_NUMBER,
-	SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER                  = "SDL.texture.create.format",
-	SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER                  = "SDL.texture.create.access",
-	SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER                   = "SDL.texture.create.width",
-	SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER                  = "SDL.texture.create.height",
-	SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT          = "SDL.texture.create.SDR_white_point",
-	SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT             = "SDL.texture.create.HDR_headroom",
-	SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER          = "SDL.texture.create.d3d11.texture",
-	SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER        = "SDL.texture.create.d3d11.texture_u",
-	SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER        = "SDL.texture.create.d3d11.texture_v",
-	SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER          = "SDL.texture.create.d3d12.texture",
-	SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER        = "SDL.texture.create.d3d12.texture_u",
-	SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER        = "SDL.texture.create.d3d12.texture_v",
-	SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER      = "SDL.texture.create.metal.pixelbuffer",
-	SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER          = "SDL.texture.create.opengl.texture",
-	SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER       = "SDL.texture.create.opengl.texture_uv",
-	SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER        = "SDL.texture.create.opengl.texture_u",
-	SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER        = "SDL.texture.create.opengl.texture_v",
-	SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER       = "SDL.texture.create.opengles2.texture",
-	SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER    = "SDL.texture.create.opengles2.texture_uv",
-	SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER     = "SDL.texture.create.opengles2.texture_u",
-	SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER     = "SDL.texture.create.opengles2.texture_v",
-	SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER          = "SDL.texture.create.vulkan.texture",
-}
+mixin(makeEnumBind(q{SDLProp_TextureCreate}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{colourspaceNumber},           q{SDL_PROP_TEXTURE_CREATE_COLOURSPACE_NUMBER}},             q{"SDL.texture.create.colorspace"}, aliases: [{q{colorspaceNumber}, q{SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER}}]},
+		{{q{formatNumber},                q{SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER}},                  q{"SDL.texture.create.format"}},
+		{{q{accessNumber},                q{SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER}},                  q{"SDL.texture.create.access"}},
+		{{q{widthNumber},                 q{SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER}},                   q{"SDL.texture.create.width"}},
+		{{q{heightNumber},                q{SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER}},                  q{"SDL.texture.create.height"}},
+		{{q{sdrWhitePointFloat},          q{SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT}},          q{"SDL.texture.create.SDR_white_point"}},
+		{{q{hdrHeadroomFloat},            q{SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT}},             q{"SDL.texture.create.HDR_headroom"}},
+		{{q{d3d11TexturePointer},         q{SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER}},          q{"SDL.texture.create.d3d11.texture"}},
+		{{q{d3d11TextureUPointer},        q{SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER}},        q{"SDL.texture.create.d3d11.texture_u"}},
+		{{q{d3d11TextureVPointer},        q{SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER}},        q{"SDL.texture.create.d3d11.texture_v"}},
+		{{q{d3d12TexturePointer},         q{SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER}},          q{"SDL.texture.create.d3d12.texture"}},
+		{{q{d3d12TextureUPointer},        q{SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER}},        q{"SDL.texture.create.d3d12.texture_u"}},
+		{{q{d3d12TextureVPointer},        q{SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER}},        q{"SDL.texture.create.d3d12.texture_v"}},
+		{{q{metalPixelBufferPointer},     q{SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER}},      q{"SDL.texture.create.metal.pixelbuffer"}},
+		{{q{openGLTextureNumber},         q{SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER}},          q{"SDL.texture.create.opengl.texture"}},
+		{{q{openGLTextureUVNumber},       q{SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER}},       q{"SDL.texture.create.opengl.texture_uv"}},
+		{{q{openGLTextureUNumber},        q{SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER}},        q{"SDL.texture.create.opengl.texture_u"}},
+		{{q{openGLTextureVNumber},        q{SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER}},        q{"SDL.texture.create.opengl.texture_v"}},
+		{{q{openGLES2TextureNumber},      q{SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER}},       q{"SDL.texture.create.opengles2.texture"}},
+		{{q{openGLES2TextureUVNumber},    q{SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER}},    q{"SDL.texture.create.opengles2.texture_uv"}},
+		{{q{openGLES2TextureUNumber},     q{SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER}},     q{"SDL.texture.create.opengles2.texture_u"}},
+		{{q{openGLES2TextureVNumber},     q{SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER}},     q{"SDL.texture.create.opengles2.texture_v"}},
+		{{q{vulkanTextureNumber},         q{SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER}},          q{"SDL.texture.create.vulkan.texture"}},
+	];
+	return ret;
+}()));
 
-enum{
-	SDL_PROP_TEXTURE_COLOURSPACE_NUMBER                 = "SDL.texture.colorspace",
-	SDL_PROP_TEXTURE_COLORSPACE_NUMBER                  = SDL_PROP_TEXTURE_COLOURSPACE_NUMBER,
-	SDL_PROP_TEXTURE_FORMAT_NUMBER                      = "SDL.texture.format",
-	SDL_PROP_TEXTURE_ACCESS_NUMBER                      = "SDL.texture.access",
-	SDL_PROP_TEXTURE_WIDTH_NUMBER                       = "SDL.texture.width",
-	SDL_PROP_TEXTURE_HEIGHT_NUMBER                      = "SDL.texture.height",
-	SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT              = "SDL.texture.SDR_white_point",
-	SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT                 = "SDL.texture.HDR_headroom",
-	SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER              = "SDL.texture.d3d11.texture",
-	SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER            = "SDL.texture.d3d11.texture_u",
-	SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER            = "SDL.texture.d3d11.texture_v",
-	SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER              = "SDL.texture.d3d12.texture",
-	SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER            = "SDL.texture.d3d12.texture_u",
-	SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER            = "SDL.texture.d3d12.texture_v",
-	SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER              = "SDL.texture.opengl.texture",
-	SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER           = "SDL.texture.opengl.texture_uv",
-	SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER            = "SDL.texture.opengl.texture_u",
-	SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER            = "SDL.texture.opengl.texture_v",
-	SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER       = "SDL.texture.opengl.target",
-	SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT                 = "SDL.texture.opengl.tex_w",
-	SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT                 = "SDL.texture.opengl.tex_h",
-	SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER           = "SDL.texture.opengles2.texture",
-	SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER        = "SDL.texture.opengles2.texture_uv",
-	SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER         = "SDL.texture.opengles2.texture_u",
-	SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER         = "SDL.texture.opengles2.texture_v",
-	SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER    = "SDL.texture.opengles2.target",
-	SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER              = "SDL.texture.vulkan.texture",
-}
+mixin(makeEnumBind(q{SDLProp_Texture}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{colourspaceNumber},               q{SDL_PROP_TEXTURE_COLOURSPACE_NUMBER}},                 q{"SDL.texture.colorspace"}, aliases: [{q{colorspaceNumber}, q{SDL_PROP_TEXTURE_COLORSPACE_NUMBER}}]},
+		{{q{formatNumber},                    q{SDL_PROP_TEXTURE_FORMAT_NUMBER}},                      q{"SDL.texture.format"}},
+		{{q{accessNumber},                    q{SDL_PROP_TEXTURE_ACCESS_NUMBER}},                      q{"SDL.texture.access"}},
+		{{q{widthNumber},                     q{SDL_PROP_TEXTURE_WIDTH_NUMBER}},                       q{"SDL.texture.width"}},
+		{{q{heightNumber},                    q{SDL_PROP_TEXTURE_HEIGHT_NUMBER}},                      q{"SDL.texture.height"}},
+		{{q{sdrWhitePointFloat},              q{SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT}},              q{"SDL.texture.SDR_white_point"}},
+		{{q{hdrHeadroomFloat},                q{SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT}},                 q{"SDL.texture.HDR_headroom"}},
+		{{q{d3d11TexturePointer},             q{SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER}},              q{"SDL.texture.d3d11.texture"}},
+		{{q{d3d11TextureUPointer},            q{SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER}},            q{"SDL.texture.d3d11.texture_u"}},
+		{{q{d3d11TextureVPointer},            q{SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER}},            q{"SDL.texture.d3d11.texture_v"}},
+		{{q{d3d12TexturePointer},             q{SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER}},              q{"SDL.texture.d3d12.texture"}},
+		{{q{d3d12TextureUPointer},            q{SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER}},            q{"SDL.texture.d3d12.texture_u"}},
+		{{q{d3d12TextureVPointer},            q{SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER}},            q{"SDL.texture.d3d12.texture_v"}},
+		{{q{openGLTextureNumber},             q{SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER}},              q{"SDL.texture.opengl.texture"}},
+		{{q{openGLTextureUVNumber},           q{SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER}},           q{"SDL.texture.opengl.texture_uv"}},
+		{{q{openGLTextureUNumber},            q{SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER}},            q{"SDL.texture.opengl.texture_u"}},
+		{{q{openGLTextureVNumber},            q{SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER}},            q{"SDL.texture.opengl.texture_v"}},
+		{{q{openGLTextureTargetNumber},       q{SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER}},       q{"SDL.texture.opengl.target"}},
+		{{q{openGLTexWFloat},                 q{SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT}},                 q{"SDL.texture.opengl.tex_w"}},
+		{{q{openGLTexHFloat},                 q{SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT}},                 q{"SDL.texture.opengl.tex_h"}},
+		{{q{openGLES2TextureNumber},          q{SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER}},           q{"SDL.texture.opengles2.texture"}},
+		{{q{openGLES2TextureUVNumber},        q{SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER}},        q{"SDL.texture.opengles2.texture_uv"}},
+		{{q{openGLES2TextureUNumber},         q{SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER}},         q{"SDL.texture.opengles2.texture_u"}},
+		{{q{openGLES2TextureVNumber},         q{SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER}},         q{"SDL.texture.opengles2.texture_v"}},
+		{{q{openGLES2TextureTargetNumber},    q{SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER}},    q{"SDL.texture.opengles2.target"}},
+		{{q{vulkanTextureNumber},             q{SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER}},              q{"SDL.texture.vulkan.texture"}},
+	];
+	return ret;
+}()));
 
-enum{
-	SDL_RENDERER_VSYNC_DISABLED  =  0,
-	SDL_RENDERER_VSYNC_ADAPTIVE  = -1,
-}
+alias SDL_RendererVSync_ = int;
+mixin(makeEnumBind(q{SDL_RendererVSync}, q{SDL_RendererVSync_}, members: (){
+	EnumMember[] ret = [
+		{{q{disabled},    q{SDL_RENDERER_VSYNC_DISABLED}},    q{ 0}},
+		{{q{adaptive},    q{SDL_RENDERER_VSYNC_ADAPTIVE}},    q{-1}},
+	];
+	return ret;
+}()));
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
@@ -246,8 +259,8 @@ mixin(joinFnBinds((){
 		{q{void*}, q{SDL_GetRenderMetalLayer}, q{SDL_Renderer* renderer}},
 		{q{void*}, q{SDL_GetRenderMetalCommandEncoder}, q{SDL_Renderer* renderer}},
 		{q{bool}, q{SDL_AddVulkanRenderSemaphores}, q{SDL_Renderer* renderer, uint waitStageMask, long waitSemaphore, long signalSemaphore}},
-		{q{bool}, q{SDL_SetRenderVSync}, q{SDL_Renderer* renderer, int vsync}},
-		{q{bool}, q{SDL_GetRenderVSync}, q{SDL_Renderer* renderer, int* vsync}},
+		{q{bool}, q{SDL_SetRenderVSync}, q{SDL_Renderer* renderer, SDL_RendererVSync_ vsync}},
+		{q{bool}, q{SDL_GetRenderVSync}, q{SDL_Renderer* renderer, SDL_RendererVSync_* vsync}},
 	];
 	return ret;
 }()));

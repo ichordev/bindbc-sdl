@@ -129,13 +129,16 @@ static assert(
 	((void*).sizeof == 8 && SDL_VirtualJoystickDesc.sizeof == 136)
 );
 
-enum{
-	SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN          = "SDL.joystick.cap.mono_led",
-	SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN           = "SDL.joystick.cap.rgb_led",
-	SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN        = "SDL.joystick.cap.player_led",
-	SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN            = "SDL.joystick.cap.rumble",
-	SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN    = "SDL.joystick.cap.trigger_rumble",
-}
+mixin(makeEnumBind(q{SDLProp_JoystickCap}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{monoLEDBoolean},          q{SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN}},          q{"SDL.joystick.cap.mono_led"}},
+		{{q{rgbLEDBoolean},           q{SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN}},           q{"SDL.joystick.cap.rgb_led"}},
+		{{q{playerLEDBoolean},        q{SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN}},        q{"SDL.joystick.cap.player_led"}},
+		{{q{rumbleBoolean},           q{SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN}},            q{"SDL.joystick.cap.rumble"}},
+		{{q{triggerRumbleBoolean},    q{SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN}},    q{"SDL.joystick.cap.trigger_rumble"}},
+	];
+	return ret;
+}()));
 
 alias SDL_Hat_ = ubyte;
 mixin(makeEnumBind(q{SDL_Hat}, q{SDL_Hat_}, members: (){
@@ -216,4 +219,3 @@ mixin(joinFnBinds((){
 	];
 	return ret;
 }()));
-

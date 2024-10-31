@@ -364,10 +364,8 @@ struct SDL_GamepadTouchpadEvent{
 	uint reserved;
 	ulong timestamp;
 	SDL_JoystickID which;
-	int touchpad;
-	int finger;
-	float x, y;
-	float pressure;
+	int touchpad, finger;
+	float x, y, pressure;
 }
 
 struct SDL_GamepadSensorEvent{
@@ -406,8 +404,7 @@ struct SDL_TouchFingerEvent{
 	ulong timestamp;
 	SDL_TouchID touchID;
 	SDL_FingerID fingerID;
-	float x, y, dx, dy;
-	float pressure;
+	float x, y, dx, dy, pressure;
 	SDL_WindowID windowID;
 }
 
@@ -438,7 +435,7 @@ struct SDL_PenTouchEvent{
 	SDL_WindowID windowID;
 	SDL_PenID which;
 	SDL_PenInputFlags_ penState;
-	float x, y; 
+	float x, y;
 	bool eraser, down;
 	
 	alias pen_state = penState;

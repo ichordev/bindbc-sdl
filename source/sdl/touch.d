@@ -25,8 +25,7 @@ mixin(makeEnumBind(q{SDL_TouchDeviceType}, aliases: [q{SDL_TouchDevice}], member
 
 struct SDL_Finger{
 	SDL_FingerID id;
-	float x, y;
-	float pressure;
+	float x, y, pressure;
 }
 
 enum SDL_TOUCH_MOUSEID = cast(SDL_MouseID)-1;

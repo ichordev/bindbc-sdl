@@ -56,22 +56,31 @@ static assert(
 
 struct SDL_IOStream;
 
-enum{
-	SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER    = "SDL.iostream.windows.handle",
-	SDL_PROP_IOSTREAM_STDIO_FILE_POINTER        = "SDL.iostream.stdio.file",
-	SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER    = "SDL.iostream.file_descriptor",
-	SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER    = "SDL.iostream.android.aasset",
-}
+mixin(makeEnumBind(q{SDLProp_IOStream}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{windowsHandlePointer},    q{SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER}},    q{"SDL.iostream.windows.handle"}},
+		{{q{stdIOFilePointer},        q{SDL_PROP_IOSTREAM_STDIO_FILE_POINTER}},        q{"SDL.iostream.stdio.file"}},
+		{{q{fileDescriptorNumber},    q{SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER}},    q{"SDL.iostream.file_descriptor"}},
+		{{q{androidAAssetPointer},    q{SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER}},    q{"SDL.iostream.android.aasset"}},
+	];
+	return ret;
+}()));
 
-enum{
-	SDL_PROP_IOSTREAM_MEMORY_POINTER      = "SDL.iostream.memory.base",
-	SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER  = "SDL.iostream.memory.size",
-}
+mixin(makeEnumBind(q{SDLProp_IOStreamMemory}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{pointer},       q{SDL_PROP_IOSTREAM_MEMORY_POINTER}},        q{"SDL.iostream.memory.base"}},
+		{{q{sizeNumber},    q{SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER}},    q{"SDL.iostream.memory.size"}},
+	];
+	return ret;
+}()));
 
-enum{
-	SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER    = "SDL.iostream.dynamic.memory",
-	SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER  = "SDL.iostream.dynamic.chunksize",
-}
+mixin(makeEnumBind(q{SDLProp_IOStreamDynamic}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{memoryPointer},      q{SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER}},      q{"SDL.iostream.dynamic.memory"}},
+		{{q{chunkSizeNumber},    q{SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER}},    q{"SDL.iostream.dynamic.chunksize"}},
+	];
+	return ret;
+}()));
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [

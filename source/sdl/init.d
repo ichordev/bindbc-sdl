@@ -41,15 +41,19 @@ extern(C) nothrow{
 	alias SDL_AppQuit_func = void function(void* appState, SDL_AppResult result);
 }
 
-enum{
-	SDL_PROP_APP_METADATA_NAME_STRING        = "SDL.app.metadata.name",
-	SDL_PROP_APP_METADATA_VERSION_STRING     = "SDL.app.metadata.version",
-	SDL_PROP_APP_METADATA_IDENTIFIER_STRING  = "SDL.app.metadata.identifier",
-	SDL_PROP_APP_METADATA_CREATOR_STRING     = "SDL.app.metadata.creator",
-	SDL_PROP_APP_METADATA_COPYRIGHT_STRING   = "SDL.app.metadata.copyright",
-	SDL_PROP_APP_METADATA_URL_STRING         = "SDL.app.metadata.url",
-	SDL_PROP_APP_METADATA_TYPE_STRING        = "SDL.app.metadata.type",
-}
+alias SDLProp_AppMetadata_ = const(char)*;
+mixin(makeEnumBind(q{SDLProp_AppMetadata}, q{SDLProp_AppMetadata_}, members: (){
+	EnumMember[] ret = [
+		{{q{nameString},          q{SDL_PROP_APP_METADATA_NAME_STRING}},          q{"SDL.app.metadata.name"}},
+		{{q{versionString},       q{SDL_PROP_APP_METADATA_VERSION_STRING}},       q{"SDL.app.metadata.version"}},
+		{{q{identifierString},    q{SDL_PROP_APP_METADATA_IDENTIFIER_STRING}},    q{"SDL.app.metadata.identifier"}},
+		{{q{creatorString},       q{SDL_PROP_APP_METADATA_CREATOR_STRING}},       q{"SDL.app.metadata.creator"}},
+		{{q{copyrightString},     q{SDL_PROP_APP_METADATA_COPYRIGHT_STRING}},     q{"SDL.app.metadata.copyright"}},
+		{{q{urlString},           q{SDL_PROP_APP_METADATA_URL_STRING}},           q{"SDL.app.metadata.url"}},
+		{{q{typeString},          q{SDL_PROP_APP_METADATA_TYPE_STRING}},          q{"SDL.app.metadata.type"}},
+	];
+	return ret;
+}()));
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
@@ -59,8 +63,8 @@ mixin(joinFnBinds((){
 		{q{SDL_InitFlags}, q{SDL_WasInit}, q{SDL_InitFlags_ flags}},
 		{q{void}, q{SDL_Quit}, q{}},
 		{q{bool}, q{SDL_SetAppMetadata}, q{const(char)* appName, const(char)* appVersion, const(char)* appIdentifier}},
-		{q{bool}, q{SDL_SetAppMetadataProperty}, q{const(char)* name, const(char)* value}},
-		{q{const(char)*}, q{SDL_GetAppMetadataProperty}, q{const(char)* name}},
+		{q{bool}, q{SDL_SetAppMetadataProperty}, q{SDLProp_AppMetadata_ name, const(char)* value}},
+		{q{const(char)*}, q{SDL_GetAppMetadataProperty}, q{SDLProp_AppMetadata_ name}},
 	];
 	return ret;
 }()));
