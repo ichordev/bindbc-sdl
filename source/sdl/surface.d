@@ -68,16 +68,6 @@ mixin(makeEnumBind(q{SDLProp_Surface}, q{const(char)*}, members: (){
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{const(char)*}, q{SDL_GetPixelFormatName}, q{SDL_PixelFormat format}},
-		{q{bool}, q{SDL_GetMasksForPixelFormat}, q{SDL_PixelFormat format, int* bpp, uint* rMask, uint* gMask, uint* bMask, uint* aMask}},
-		{q{SDL_PixelFormat}, q{SDL_GetPixelFormatForMasks}, q{int bpp, uint rMask, uint gMask, uint bMask, uint aMask}},
-		{q{const(SDL_PixelFormatDetails)*}, q{SDL_GetPixelFormatDetails}, q{SDL_PixelFormat format}},
-		{q{SDL_Palette*}, q{SDL_CreatePalette}, q{int nColours}},
-		{q{bool}, q{SDL_SetPaletteColors}, q{SDL_Palette* palette, const(SDL_Colour)* colours, int firstColour, int nColours}, aliases: [q{SDL_SetPaletteColours}]},
-		{q{void}, q{SDL_DestroyPalette}, q{SDL_Palette* palette}},
-		{q{uint}, q{SDL_MapRGB}, q{const(SDL_PixelFormatDetails)* format, const(SDL_Palette)* palette, ubyte r, ubyte g, ubyte b}},
-		{q{uint}, q{SDL_MapRGBA}, q{const(SDL_PixelFormatDetails)* format, const(SDL_Palette)* palette, ubyte r, ubyte g, ubyte b, ubyte a}},
-		{q{void}, q{SDL_GetRGB}, q{uint pixel, const(SDL_PixelFormatDetails)* format, const(SDL_Palette)* palette, ubyte* r, ubyte* g, ubyte* b}},
 		{q{SDL_Surface*}, q{SDL_CreateSurface}, q{int width, int height, SDL_PixelFormat format}},
 		{q{SDL_Surface*}, q{SDL_CreateSurfaceFrom}, q{int width, int height, SDL_PixelFormat format, void* pixels, int pitch}},
 		{q{void}, q{SDL_DestroySurface}, q{SDL_Surface* surface}},
