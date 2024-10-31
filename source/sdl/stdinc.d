@@ -62,7 +62,7 @@ enum SDL_INVALID_UNICODE_CODEPOINT = '\uFFFD';
 enum double SDL_PI_D = 3.141592653589793238462643383279502884;
 enum float  SDL_PI_F = 3.141592653589793238462643383279502884f;
 
-mixin(makeEnumBind(q{SDL_IConvError}, q{SDL_iconv_t}, members: (){
+mixin(makeEnumBind(q{SDL_IConvError}, q{SDL_IConv}, members: (){
 	EnumMember[] ret = [
 		{{q{error},    q{SDL_ICONV_ERROR}},   q{cast(SDL_iconv_t)-1}},
 		{{q{_2Big},    q{SDL_ICONV_E2BIG}},   q{cast(SDL_iconv_t)-2}},
@@ -72,8 +72,10 @@ mixin(makeEnumBind(q{SDL_IConvError}, q{SDL_iconv_t}, members: (){
 	return ret;
 }()));
 
-struct SDL_iconv_data_t;
-alias SDL_iconv_t = SDL_iconv_data_t*;
+struct SDL_IConvData;
+alias SDL_iconv_data_t = SDL_IConvData;
+alias SDL_IConv = SDL_IConvData*;
+alias SDL_iconv_t = SDL_IConvData*;
 
 pragma(inline,true) extern(C) nothrow @nogc{
 	char* SDL_iconv_utf8_locale(const(char)* s) =>

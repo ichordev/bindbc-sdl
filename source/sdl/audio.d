@@ -17,12 +17,6 @@ enum{
 	SDL_AUDIO_MASK_BIG_ENDIAN  = 1U << 12,
 	SDL_AUDIO_MASK_SIGNED      = 1U << 15,
 }
-static if(dStyleEnums){
-	alias maskBitSize = SDL_AUDIO_MASK_BITSIZE;
-	alias maskFloat = SDL_AUDIO_MASK_FLOAT;
-	alias maskBigEndian = SDL_AUDIO_MASK_BIG_ENDIAN;
-	alias maskSigned = SDL_AUDIO_MASK_SIGNED;
-}
 
 pragma(inline,true) extern(C)
 auto SDL_DEFINE_AUDIO_FORMAT(bool signed, bool bigEndian, bool float_, uint size) nothrow @nogc pure @safe =>
@@ -68,25 +62,16 @@ pragma(inline,true) extern(C) nothrow @nogc pure @safe{
 	bool SDL_AUDIO_ISLITTLEENDIAN(uint x) => (x & SDL_AUDIO_MASK_BIG_ENDIAN) == 0;
 	bool SDL_AUDIO_ISUNSIGNED(uint x)     => (x & SDL_AUDIO_MASK_SIGNED) == 0;
 }
-alias bitSize = SDL_AUDIO_BITSIZE;
-alias byteSize = SDL_AUDIO_BYTESIZE;
-alias isFloat = SDL_AUDIO_ISFLOAT;
-alias isBigEndian = SDL_AUDIO_ISBIGENDIAN;
-alias isSigned = SDL_AUDIO_ISSIGNED;
-alias isInt = SDL_AUDIO_ISINT;
-alias isLittleEndian = SDL_AUDIO_ISLITTLEENDIAN;
-alias isUnsigned = SDL_AUDIO_ISUNSIGNED;
 
 alias SDL_AudioDeviceID = uint;
 
-enum: SDL_AudioDeviceID{
-	SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK  = cast(SDL_AudioDeviceID)0xFFFF_FFFFU,
-	SDL_AUDIO_DEVICE_DEFAULT_RECORDING = cast(SDL_AudioDeviceID)0xFFFF_FFFEU,
-}
-static if(dStyleEnums){
-	alias deviceDefaultPlayback = SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK;
-	alias deviceDefaultRecording = SDL_AUDIO_DEVICE_DEFAULT_RECORDING;
-}
+mixin(makeEnumBind(q{SDL_AudioDevice}, q{SDL_AudioDeviceID}, members: (){
+	EnumMember[] ret = [
+		{{q{defaultPlayback},   q{SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK}},   q{cast(SDL_AudioDeviceID)0xFFFF_FFFFU}},
+		{{q{defaultRecording},  q{SDL_AUDIO_DEVICE_DEFAULT_RECORDING}},  q{cast(SDL_AudioDeviceID)0xFFFF_FFFEU}},
+	];
+	return ret;
+}()));
 
 struct SDL_AudioSpec{
 	SDL_AudioFormat format;
@@ -96,8 +81,7 @@ struct SDL_AudioSpec{
 
 pragma(inline,true) extern(C)
 int SDL_AUDIO_FRAMESIZE(SDL_AudioSpec x) nothrow @nogc pure @safe =>
-	SDL_AUDIO_BYTESIZE(x.format)* x.channels;
-alias frameSize = SDL_AUDIO_FRAMESIZE;
+	SDL_AUDIO_BYTESIZE(x.format) * x.channels;
 
 struct SDL_AudioStream;
 

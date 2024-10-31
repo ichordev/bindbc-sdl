@@ -8,9 +8,11 @@ module sdl.version_;
 
 import bindbc.sdl.config, bindbc.sdl.codegen;
 
-enum SDL_MAJOR_VERSION = sdlVersion.major;
-enum SDL_MINOR_VERSION = sdlVersion.minor;
-enum SDL_MICRO_VERSION = sdlVersion.patch;
+enum{
+	SDL_MAJOR_VERSION = sdlVersion.major,
+	SDL_MINOR_VERSION = sdlVersion.minor,
+	SDL_MICRO_VERSION = sdlVersion.patch,
+}
 
 enum SDL_VERSION = SDL_VERSIONNUM(SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION);
 

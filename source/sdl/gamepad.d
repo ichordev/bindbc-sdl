@@ -10,7 +10,7 @@ import bindbc.sdl.config, bindbc.sdl.codegen;
 
 import sdl.guid: SDL_GUID;
 import sdl.iostream: SDL_IOStream;
-import sdl.joystick;
+import sdl.joystick: SDL_Joystick, SDL_JoystickConnectionState, SDL_JoystickID, SDLProp_JoystickCap;
 import sdl.power: SDL_PowerState;
 import sdl.properties: SDL_PropertiesID;
 import sdl.sensor: SDL_SensorType;
@@ -141,13 +141,16 @@ struct SDL_GamepadBinding{
 	alias output_type = outputType;
 }
 
-enum{
-	SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN          = SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN,
-	SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN           = SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN,
-	SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN        = SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN,
-	SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN            = SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN,
-	SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN    = SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN,
-}
+mixin(makeEnumBind(q{SDLProp_GamepadCap}, q{SDLProp_JoystickCap}, members: (){
+	EnumMember[] ret = [
+		{{q{monoLEDBoolean},          q{SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN}},          q{SDLProp_JoystickCap.monoLEDBoolean}},
+		{{q{rgbLEDBoolean},           q{SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN}},           q{SDLProp_JoystickCap.rgbLEDBoolean}},
+		{{q{playerLEDBoolean},        q{SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN}},        q{SDLProp_JoystickCap.playerLEDBoolean}},
+		{{q{rumbleBoolean},           q{SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN}},            q{SDLProp_JoystickCap.rumbleBoolean}},
+		{{q{triggerRumbleBoolean},    q{SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN}},    q{SDLProp_JoystickCap.triggerRumbleBoolean}},
+	];
+	return ret;
+}()));
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [

@@ -677,14 +677,17 @@ struct SDL_GPUTextureCreateInfo{
 	alias sample_count = sampleCount;
 }
 
-enum{
-	SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT        = "SDL.gpu.createtexture.d3d12.clear.r",
-	SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT        = "SDL.gpu.createtexture.d3d12.clear.g",
-	SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT        = "SDL.gpu.createtexture.d3d12.clear.b",
-	SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT        = "SDL.gpu.createtexture.d3d12.clear.a",
-	SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT    = "SDL.gpu.createtexture.d3d12.clear.depth",
-	SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8  = "SDL.gpu.createtexture.d3d12.clear.stencil",
-}
+mixin(makeEnumBind(q{SDLProp_GPUCreateTexture}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{d3d12ClearRFloat},          q{SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT}},          q{"SDL.gpu.createtexture.d3d12.clear.r"}},
+		{{q{d3d12ClearGFloat},          q{SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT}},          q{"SDL.gpu.createtexture.d3d12.clear.g"}},
+		{{q{d3d12ClearBFloat},          q{SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT}},          q{"SDL.gpu.createtexture.d3d12.clear.b"}},
+		{{q{d3d12ClearAFloat},          q{SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT}},          q{"SDL.gpu.createtexture.d3d12.clear.a"}},
+		{{q{d3d12ClearDepthFloat},      q{SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT}},      q{"SDL.gpu.createtexture.d3d12.clear.depth"}},
+		{{q{d3d12ClearStencilUInt8},    q{SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8}},    q{"SDL.gpu.createtexture.d3d12.clear.stencil"}},
+	];
+	return ret;
+}()));
 
 struct SDL_GPUBufferCreateInfo{
 	SDL_GPUBufferUsageFlags_ usage;
@@ -721,7 +724,7 @@ struct SDL_GPURasteriserState{
 	alias enable_depth_bias = enableDepthBias;
 	alias enable_depth_clip = enableDepthClip;
 }
-alias  SDL_GPURasterizerState = SDL_GPURasteriserState;
+alias SDL_GPURasterizerState = SDL_GPURasteriserState;
 
 struct SDL_GPUMultisampleState{
 	SDL_GPUSampleCount sampleCount;
@@ -936,18 +939,21 @@ struct SDL_GPUStorageTextureReadWriteBinding{
 	alias mip_level = mipLevel;
 }
 
-enum{
-	SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOL                = "SDL.gpu.device.create.debugmode",
-	SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOL           = "SDL.gpu.device.create.preferlowpower",
-	SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING                   = "SDL.gpu.device.create.name",
-	SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOL          = "SDL.gpu.device.create.shaders.private",
-	SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOL            = "SDL.gpu.device.create.shaders.spirv",
-	SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOL             = "SDL.gpu.device.create.shaders.dxbc",
-	SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOL             = "SDL.gpu.device.create.shaders.dxil",
-	SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOL              = "SDL.gpu.device.create.shaders.msl",
-	SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOL         = "SDL.gpu.device.create.shaders.metallib",
-	SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING    = "SDL.gpu.device.create.d3d12.semantic",
-}
+mixin(makeEnumBind(q{SDLProp_GPUDeviceCreate}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{debugModeBool},              q{SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOL}},                q{"SDL.gpu.device.create.debugmode"}},
+		{{q{preferLowPowerBool},         q{SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOL}},           q{"SDL.gpu.device.create.preferlowpower"}},
+		{{q{nameString},                 q{SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING}},                   q{"SDL.gpu.device.create.name"}},
+		{{q{shadersPrivateBool},         q{SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOL}},          q{"SDL.gpu.device.create.shaders.private"}},
+		{{q{shadersSPIRVBool},           q{SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOL}},            q{"SDL.gpu.device.create.shaders.spirv"}},
+		{{q{shadersDXBCBool},            q{SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOL}},             q{"SDL.gpu.device.create.shaders.dxbc"}},
+		{{q{shadersDXILBool},            q{SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOL}},             q{"SDL.gpu.device.create.shaders.dxil"}},
+		{{q{shadersMSLBool},             q{SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOL}},              q{"SDL.gpu.device.create.shaders.msl"}},
+		{{q{shadersMetallibBool},        q{SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOL}},         q{"SDL.gpu.device.create.shaders.metallib"}},
+		{{q{d3d12SemanticNameString},    q{SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING}},    q{"SDL.gpu.device.create.d3d12.semantic"}},
+	];
+	return ret;
+}()));
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [

@@ -9,8 +9,7 @@ module sdl.locale;
 import bindbc.sdl.config, bindbc.sdl.codegen;
 
 struct SDL_Locale{
-	const(char)* language;
-	const(char)* country;
+	const(char)* language, country;
 }
 
 mixin(joinFnBinds((){

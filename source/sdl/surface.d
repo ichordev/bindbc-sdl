@@ -57,11 +57,14 @@ struct SDL_Surface{
 	alias refcount = refCount;
 }
 
-enum{
-	SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT      = "SDL.surface.SDR_white_point",
-	SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT         = "SDL.surface.HDR_headroom",
-	SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING    = "SDL.surface.tonemap",
-}
+mixin(makeEnumBind(q{SDLProp_Surface}, q{const(char)*}, members: (){
+	EnumMember[] ret = [
+		{{q{sdrWhitePointFloat},       q{SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT}},      q{"SDL.surface.SDR_white_point"}},
+		{{q{hdrHeadroomFloat},         q{SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT}},         q{"SDL.surface.HDR_headroom"}},
+		{{q{toneMapOperatorString},    q{SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING}},    q{"SDL.surface.tonemap"}},
+	];
+	return ret;
+}()));
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [

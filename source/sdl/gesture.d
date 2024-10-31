@@ -613,7 +613,7 @@ void gestureProcessEvent(const(SDL_Event)* event){
 					dDist = 0;
 					dtheta = 0;
 				}
-
+				
 				gestureSendMulti(inTouch, dtheta, dDist);
 			}else{
 			}

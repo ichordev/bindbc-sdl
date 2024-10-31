@@ -370,10 +370,7 @@ mixin(makeEnumBind(q{SDL_Colourspace}, aliases: [q{SDL_Colorspace}], members: ()
 }()));
 
 pragma(inline,true) extern(C) nothrow @nogc pure @safe{
-	uint SDL_DEFINE_COLOURSPACE(
-		SDL_ColourType type, SDL_ColourRange range, SDL_ColourPrimaries primaries,
-		SDL_TransferCharacteristics transfer, SDL_MatrixCoefficients matrix, SDL_ChromaLocation chroma,
-	) =>
+	uint SDL_DEFINE_COLOURSPACE(SDL_ColourType type, SDL_ColourRange range, SDL_ColourPrimaries primaries, SDL_TransferCharacteristics transfer, SDL_MatrixCoefficients matrix, SDL_ChromaLocation chroma) =>
 		(type << 28) | (range << 24) | (chroma << 20) | (primaries << 10) | (transfer << 5) | matrix;
 	
 	SDL_ColourType SDL_COLOURSPACETYPE(SDL_Colourspace x) =>
