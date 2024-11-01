@@ -303,10 +303,11 @@ If you intend to compile for any of these platforms, please add the correspondin
 | Sony Vita                      | `Vita`             |
 | Sony PSP                       | `PSP`              |
 
-EXPLAIN:
-- `SDL_MainUnicode` makes SDL's main use UCS-2 on applicable Microsoft platforms
-- `SDL_Gesture` enables sdl.gesture!
 
+## Gesture API
+TODO: expand this section
+
+`SDL_Gesture` enables sdl.gesture from [this commit](https://github.com/libsdl-org/SDL_gesture/commit/a11841736b47e4911bf64df39516714626837ba7).
 
 ## Entry points
 It is recommended that you read this first: [README-main-functions.md](https://github.com/libsdl-org/SDL/blob/main/docs/README-main-functions.md)
@@ -393,3 +394,8 @@ version SDL_MainUseCallbacks{
 ```
 > [!NOTE]\
 > This example code does **NOT** support unittests, and doesn't run any module constructors/destructors. Look at how DRuntime implements these features if you need them in your project.
+
+### `SDL_MainUnicode`
+TODO: expand this section
+
+Makes SDL's main use UCS-2 on applicable Microsoft platforms
