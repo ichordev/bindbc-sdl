@@ -13,6 +13,12 @@
 	"libs": ["SDL3"],
 	"versions": ["SDL_MainUseCallbacks"],
 	
+	"buildTypes": {
+		"betterC": {
+			"buildOptions": ["betterC"],
+		},
+	},
+	
 	"configurations": [
 		{ "name": "audio1",       "mainSourceFile": "audio/simple_playback.d" },
 		{ "name": "audio2",       "mainSourceFile": "audio/simple_playback_callback.d" },
